@@ -1,0 +1,254 @@
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useGameOnData } from '../DataContext.jsx';
+import { api } from '../api.js';
+import Reveal from '../components/Reveal.jsx';
+import QuoteBreak from '../components/QuoteBreak.jsx';
+import AthleteCard from '../components/AthleteCard.jsx';
+import FallbackImage from '../components/FallbackImage.jsx';
+import { ATHLETES } from '../athletesData.js';
+
+const DI_TILES = [
+  { label: 'Players', to: '/data/players', photo: '/images/tiles/players.jpg' },
+  { label: 'Teams', to: '/data/teams', photo: '/images/tiles/teams.jpg' },
+  { label: 'Standings', to: '/data/standings', photo: '/images/tiles/standings.jpg' },
+  { label: 'Performance', to: '/data/gps', photo: '/images/tiles/performance.jpg' }
+];
+
+export default function Home() {
+  const { store, allTeams } = useGameOnData();
+  const totalPlayers = store.players.length;
+  const totalTeams = allTeams.length;
+
+  const teamNames = useMemo(() => allTeams.map(t => t.name).filter(Boolean), [allTeams]);
+  const tickerNames = teamNames.length ? teamNames : ["Kenya Women's Premier League", 'National Super League', 'Division One'];
+  const tickerList = [...tickerNames, ...tickerNames];
+
+  // Hub search
+  const [q, setQ] = useState('');
+  const [results, setResults] = useState([]);
+  const [showDrop, setShowDrop] = useState(false);
+  const debounceRef = useRef(null);
+  const searchWrapRef = useRef(null);
+
+  useEffect(() => {
+    clearTimeout(debounceRef.current);
+    if (!q.trim()) { setShowDrop(false); return; }
+    debounceRef.current = setTimeout(async () => {
+      try {
+        const data = await api(`/api/search?q=${encodeURIComponent(q.trim())}`);
+        setResults(data.results || []);
+        setShowDrop(true);
+      } catch (e) { /* ignore */ }
+    }, 220);
+    return () => clearTimeout(debounceRef.current);
+  }, [q]);
+
+  useEffect(() => {
+    function onClick(e) {
+      if (searchWrapRef.current && !searchWrapRef.current.contains(e.target)) setShowDrop(false);
+    }
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, []);
+
+  const apiOffline = store.loaded && !totalPlayers && !totalTeams;
+
+  return (
+    <>
+      {/* HERO — full-bleed photo treatment (self-contained max-width via .photo-hero-inner) */}
+      <section className="photo-hero">
+        <FallbackImage src="/images/hero.jpg" alt="" className="photo-hero-photo" />
+        <div className="photo-hero-overlay"></div>
+        <div className="photo-hero-inner">
+          <h1>Women's Football Intelligence</h1>
+          <div className="photo-hero-sub">Data. Branding. Visibility.</div>
+          <div className="photo-hero-cta">
+            <a href="#our-players" className="btn">See Players</a>
+          </div>
+        </div>
+        <div className="scroll-cue"><span className="bar"></span>Scroll</div>
+      </section>
+
+      <QuoteBreak
+        eyebrow="In their words"
+        quote="Football was my stepping stone to a better life"
+        attribution="Doreen Nabwire"
+      />
+
+      {/* OUR PLAYERS — the 3 flagship athletes */}
+      <section id="our-players" className="light-section">
+        <div className="container">
+          <Reveal className="section-head" as="div">
+            <h2 style={{ fontSize: 'clamp(1.9rem,3.4vw,2.6rem)' }}>Our Players</h2>
+            <Link className="view-link" to="/services">Meet the program →</Link>
+          </Reveal>
+          <Reveal className="athlete-grid">
+            {ATHLETES.map(a => <AthleteCard key={a.slug} athlete={a} />)}
+          </Reveal>
+        </div>
+      </section>
+
+      {/* DATA INTELLIGENCE — search + 4-tile quick nav */}
+      <section className="light-section" style={{ paddingBottom: 44 }}>
+        <div className="container">
+          <Reveal style={{ maxWidth: 760 }}>
+            <div className="eyebrow">Data Intelligence</div>
+            <h2 style={{ fontSize: 'clamp(2.1rem,4.2vw,3.2rem)', marginTop: 16 }}>Search the database.</h2>
+            <p className="sub" style={{ marginTop: 12 }}>Every club and player across Kenya's women's football leagues — searchable in real time.</p>
+          </Reveal>
+
+          {apiOffline && (
+            <Reveal style={{
+              marginTop: 24, background: 'rgba(217,80,58,0.08)', border: '1px solid var(--coral)',
+              color: 'var(--coral)', borderRadius: 8, padding: '14px 18px', fontFamily: 'var(--mono)',
+              fontSize: '.82rem', maxWidth: 640
+            }}>
+              Can't reach the API right now — this page needs to run alongside your FastAPI backend to show live data.
+            </Reveal>
+          )}
+
+          <Reveal className="hub-search" style={{ marginTop: 32 }}>
+            <div ref={searchWrapRef} style={{ position: 'relative' }}>
+              <input
+                placeholder='Search players or clubs — e.g. "Vihiga Queens"'
+                autoComplete="off"
+                value={q}
+                onChange={e => setQ(e.target.value)}
+              />
+              {showDrop && (
+                <div className="hub-search-drop show">
+                  {results.length ? results.slice(0, 8).map(r => (
+                    <Link key={r.type + r.id} to={`/data/${r.type === 'player' ? 'player/' + r.id : 'team/' + r.id}`}>
+                      <span>{r.name}</span><span className="tag">{r.type}</span>
+                    </Link>
+                  )) : <div className="empty">No matches.</div>}
+                </div>
+              )}
+            </div>
+          </Reveal>
+
+          <Reveal className="hero-stats" style={{ borderTop: '1px solid var(--line)', marginTop: 38, paddingTop: 26 }}>
+            <div><b>{totalPlayers || '—'}</b><span>Players tracked</span></div>
+            <div><b>{totalTeams || '—'}</b><span>Clubs profiled</span></div>
+            <div><b>4</b><span>Leagues covered</span></div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="light-section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <Reveal className="di-tiles">
+            {DI_TILES.map(t => (
+              <Link key={t.label} to={t.to} className="di-tile">
+                <FallbackImage src={t.photo} alt="" className="di-tile-photo" />
+                <span className="di-tile-label">{t.label}</span>
+                <span className="di-tile-arrow">Open →</span>
+              </Link>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="light-section" style={{ paddingTop: 60 }}>
+        <div className="container">
+          <Reveal style={{ maxWidth: 900 }}>
+            <h2 style={{ fontSize: 'clamp(2.4rem,6vw,4.4rem)', marginBottom: 22 }}>Let's make the difference.</h2>
+            <p style={{ fontSize: '1.15rem', color: 'var(--text-dim)', maxWidth: '56ch', marginBottom: 26 }}>
+              GameOn Collective is building the digital infrastructure for women's football in Africa — athlete brand building, athlete performance data, and data-driven storytelling, in one place.
+            </p>
+            <Link to="/services" className="btn btn-outline" style={{ borderColor: 'var(--line-2)' }}>See what we do →</Link>
+          </Reveal>
+        </div>
+      </section>
+
+      <div className="light-section ticker-wrap" style={{ borderColor: 'var(--line)' }}>
+        <div className="ticker">
+          {tickerList.map((n, i) => <span key={i}>{n}</span>)}
+        </div>
+      </div>
+
+      {/* BUILT FOR WHO'S ACTUALLY BUYING IN — moved ahead of Services since
+          establishing the market matters more than listing the offering */}
+      <section className="segment-band">
+        <FallbackImage src="/images/segment-bg.jpg" alt="" className="segment-band-photo" />
+        <div className="segment-band-overlay"></div>
+        <div className="container">
+          <Reveal className="section-head" as="div">
+            <h2 style={{ fontSize: 'clamp(1.9rem,3.4vw,2.6rem)' }}>For scouts, agents, clubs, and everyone chasing talent.</h2>
+            <p className="sub">Scouts, academies, clubs and sponsors — the people finding, developing, and backing talent.</p>
+          </Reveal>
+          <Reveal className="segment-grid">
+            <div className="segment">
+              <div className="seg-tag">Scouts</div>
+              <h4>Compare talent, backed by data.</h4>
+              <p>Scout scores, GPS metrics and side-by-side player comparisons — not just word of mouth.</p>
+              <Link to="/data/compare">Open the compare tool →</Link>
+            </div>
+            <div className="segment">
+              <div className="seg-tag">Academies</div>
+              <h4>Track development, prove progress.</h4>
+              <p>Player-level records that follow a prospect from first appearance to first call-up.</p>
+              <Link to="/data/players">View player directory →</Link>
+            </div>
+            <div className="segment">
+              <div className="seg-tag">Clubs</div>
+              <h4>Bring your squad's data online.</h4>
+              <p>Rosters, standings and performance tracking built for how your club actually runs.</p>
+              <Link to="/data">Open the platform →</Link>
+            </div>
+            <div className="segment">
+              <div className="seg-tag">Sponsors</div>
+              <h4>Reach audiences that matter.</h4>
+              <p>Sponsorship, content and campaign support inside a fast-growing sport.</p>
+              <Link to="/services">See partnership options →</Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="light-section">
+        <div className="container">
+          <Reveal className="section-head" as="div">
+            <h2 style={{ fontSize: 'clamp(1.9rem,3.4vw,2.6rem)' }}>Services</h2>
+          </Reveal>
+          <Reveal className="pillars cols-3">
+            <div className="pillar">
+              <div className="num">01</div>
+              <h3>Brand Building</h3>
+              <p>Helping players build a public identity backed by real performance — not just a highlight reel.</p>
+              <Link to="/services">View services →</Link>
+            </div>
+            <div className="pillar">
+              <div className="num">02</div>
+              <h3>Social Media</h3>
+              <p>Channel management, content calendars, and audience growth for athletes and clubs.</p>
+              <Link to="/services">View services →</Link>
+            </div>
+            <div className="pillar">
+              <div className="num">03</div>
+              <h3>Content</h3>
+              <p>Original photography, video, and storytelling — grounded in real numbers, not just narrative.</p>
+              <Link to="/news">Read the latest →</Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section style={{ paddingBottom: 110 }}>
+        <div className="container">
+          <Reveal className="talk-block">
+            <h2><span className="w1">LET'S</span> <span className="w2">TALK</span></h2>
+            <p style={{ fontFamily: 'var(--mono)', color: 'var(--text-dim)', marginTop: 22, fontSize: '1rem' }}>
+              Clubs · Federations · Brand partners · Scouts · Academies
+            </p>
+            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginTop: 32 }}>
+              <Link to="/contact" className="btn btn-primary">Get in touch →</Link>
+              <Link to="/services" className="btn btn-outline">Our services</Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </>
+  );
+}
