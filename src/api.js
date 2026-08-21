@@ -1,7 +1,5 @@
-// CONFIG — same-origin by default. In dev, vite.config.js proxies /api to
-// your local FastAPI backend. In production, deploy this alongside the API
-// or set API_BASE to the full backend URL.
-export const API_BASE = '';
+// CONFIG — points to the live FastAPI backend on Render.
+export const API_BASE = 'https://gameon-fastapi.onrender.com';
 
 export async function api(path) {
   const res = await fetch(API_BASE + path);
