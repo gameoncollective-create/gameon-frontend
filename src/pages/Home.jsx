@@ -182,43 +182,38 @@ export default function Home() {
         </div>
       </div>
 
-      {/* AUDIENCES — photo-backed dark band */}
+            {/* AUDIENCES — photo-backed dark band */}
       <section className="segment-band">
         <FallbackImage src="/images/segment-bg.jpg" alt="" className="segment-band-photo" />
         <div className="segment-band-overlay"></div>
         <div className="container">
           <Reveal className="section-head" as="div">
-            <h2 style={{ fontSize: 'clamp(1.9rem,3.4vw,2.6rem)' }}>For scouts, agents, clubs, and everyone chasing talent.</h2>
-            <p className="sub">Scouts, academies, clubs and sponsors — the people finding, developing, and backing talent.</p>
+            <h2 style={{ fontSize: 'clamp(1.9rem,3.4vw,2.6rem)' }}>Built for the people moving the game forward.</h2>
           </Reveal>
           <Reveal className="segment-grid">
             <div className="segment">
-              <div className="seg-tag">Scouts</div>
-              <h4>Compare talent, backed by data.</h4>
-              <p>Scout scores, GPS metrics and side-by-side player comparisons — not just word of mouth.</p>
-              <Link to="/data/compare">Open the compare tool →</Link>
+              <div className="seg-tag">Players</div>
+              <p>Build your profile, understand your performance and grow your football brand.</p>
+              <Link to="/services">Our athlete program →</Link>
             </div>
             <div className="segment">
-              <div className="seg-tag">Academies</div>
-              <h4>Track development, prove progress.</h4>
-              <p>Player-level records that follow a prospect from first appearance to first call-up.</p>
-              <Link to="/data/players">View player directory →</Link>
+              <div className="seg-tag">Scouts &amp; Agents</div>
+              <p>Discover players and follow talent across Kenya's women's leagues.</p>
+              <Link to="/data/players">Browse players →</Link>
             </div>
             <div className="segment">
-              <div className="seg-tag">Clubs</div>
-              <h4>Bring your squad's data online.</h4>
-              <p>Rosters, standings and performance tracking built for how your club actually runs.</p>
-              <Link to="/data">Open the platform →</Link>
+              <div className="seg-tag">Clubs &amp; Academies</div>
+              <p>Showcase your squad, strengthen player records and give your players greater visibility.</p>
+              <Link to="/data/teams">View clubs →</Link>
             </div>
             <div className="segment">
-              <div className="seg-tag">Sponsors</div>
-              <h4>Reach audiences that matter.</h4>
-              <p>Sponsorship, content and campaign support inside a fast-growing sport.</p>
-              <Link to="/services">See partnership options →</Link>
+              <div className="seg-tag">Brands &amp; Partners</div>
+              <p>Connect with players, clubs and audiences across women's football.</p>
+              <Link to="/contact">Get in touch →</Link>
             </div>
           </Reveal>
         </div>
-      </section>
+      </section> 
 
       
             {/* SERVICES */}
