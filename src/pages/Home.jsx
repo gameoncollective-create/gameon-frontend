@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useGameOnData } from '../DataContext.jsx';
@@ -71,13 +70,7 @@ export default function Home() {
         <div className="scroll-cue"><span className="bar"></span>Scroll</div>
       </section>
 
-            <QuoteBreak
-        eyebrow="In their words"
-        quote="Football was my stepping stone to a better life"
-        attribution="Doreen Nabwire"
-      />
-
-      {/* ABOUT — who's behind this, before showing the athletes */}
+      {/* ABOUT — who's behind this */}
       <section id="about" className="light-section">
         <div className="container">
           <Reveal style={{ maxWidth: 780 }}>
@@ -95,8 +88,6 @@ export default function Home() {
       </section>
 
       {/* OUR PLAYERS — the 3 flagship athletes */}
-
-            {/* OUR PLAYERS — the 3 flagship athletes */}
       <section id="our-players" className="light-section">
         <div className="container">
           <Reveal style={{ maxWidth: 780, marginBottom: 44 }}>
@@ -113,9 +104,10 @@ export default function Home() {
             <Link className="view-link" to="/services">Meet our players →</Link>
           </Reveal>
         </div>
-      </section> 
+      </section>
 
-            <section className="light-section" style={{ paddingBottom: 44 }}>
+      {/* DATA INTELLIGENCE — search + 4-tile quick nav (dark section) */}
+      <section style={{ paddingBottom: 44 }}>
         <div className="container">
           <Reveal style={{ maxWidth: 760 }}>
             <div className="eyebrow">Data Intelligence</div>
@@ -123,7 +115,7 @@ export default function Home() {
             <p className="sub" style={{ marginTop: 12 }}>Find players and clubs across Kenya's women's football pyramid.</p>
             <p className="sub" style={{ marginTop: 8 }}>Our database is growing as we add and update player, team and competition information across the women's game.</p>
           </Reveal>
-          
+
           {apiOffline && (
             <Reveal style={{
               marginTop: 24, background: 'rgba(217,80,58,0.08)', border: '1px solid var(--coral)',
@@ -162,7 +154,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="light-section" style={{ paddingTop: 0 }}>
+      <section style={{ paddingTop: 0 }}>
         <div className="container">
           <Reveal className="di-tiles">
             {DI_TILES.map(t => (
@@ -175,6 +167,13 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+
+      {/* QUOTE — moved here, right before "Let's make the difference" */}
+      <QuoteBreak
+        eyebrow="In their words"
+        quote="Football was my stepping stone to a better life"
+        attribution="Doreen Nabwire"
+      />
 
       <section className="light-section" style={{ paddingTop: 60 }}>
         <div className="container">
@@ -194,7 +193,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* AUDIENCES — photo-backed dark band, ahead of Services */}
+      {/* AUDIENCES — photo-backed dark band */}
       <section className="segment-band">
         <FallbackImage src="/images/segment-bg.jpg" alt="" className="segment-band-photo" />
         <div className="segment-band-overlay"></div>
