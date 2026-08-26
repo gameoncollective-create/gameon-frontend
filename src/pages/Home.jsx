@@ -96,18 +96,24 @@ export default function Home() {
 
       {/* OUR PLAYERS — the 3 flagship athletes */}
 
-      {/* OUR PLAYERS — the 3 flagship athletes */}
+            {/* OUR PLAYERS — the 3 flagship athletes */}
       <section id="our-players" className="light-section">
         <div className="container">
-          <Reveal className="section-head" as="div">
-            <h2 style={{ fontSize: 'clamp(1.9rem,3.4vw,2.6rem)' }}>Our Players</h2>
-            <Link className="view-link" to="/services">Meet the program →</Link>
+          <Reveal style={{ maxWidth: 780, marginBottom: 44 }}>
+            <div className="eyebrow">Athlete Program</div>
+            <h2 style={{ fontSize: 'clamp(1.9rem,3.6vw,2.8rem)', marginTop: 16 }}>Working with players, not just profiling them.</h2>
+            <p style={{ fontSize: '1.05rem', color: 'var(--text-dim)', marginTop: 18, lineHeight: 1.7 }}>
+              We work directly with selected athletes on performance tracking, brand development and storytelling — building a clearer picture of the player on and off the pitch.
+            </p>
           </Reveal>
           <Reveal className="athlete-grid">
             {ATHLETES.map(a => <AthleteCard key={a.slug} athlete={a} />)}
           </Reveal>
+          <Reveal style={{ marginTop: 32 }}>
+            <Link className="view-link" to="/services">Meet our players →</Link>
+          </Reveal>
         </div>
-      </section>
+      </section> 
 
       {/* DATA INTELLIGENCE — search + 4-tile quick nav */}
       <section className="light-section" style={{ paddingBottom: 44 }}>
