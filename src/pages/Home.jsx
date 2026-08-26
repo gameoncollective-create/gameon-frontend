@@ -175,18 +175,7 @@ export default function Home() {
         attribution="Doreen Nabwire"
       />
 
-      <section className="light-section" style={{ paddingTop: 60 }}>
-        <div className="container">
-          <Reveal style={{ maxWidth: 900 }}>
-            <h2 style={{ fontSize: 'clamp(2.4rem,6vw,4.4rem)', marginBottom: 22 }}>Let's make the difference.</h2>
-            <p style={{ fontSize: '1.15rem', color: 'var(--text-dim)', maxWidth: '56ch', marginBottom: 26 }}>
-              GameOn Collective is building the digital infrastructure for women's football in Africa — athlete brand building, athlete performance data, and data-driven storytelling, in one place.
-            </p>
-            <Link to="/services" className="btn btn-outline" style={{ borderColor: 'var(--line-2)' }}>See what we do →</Link>
-          </Reveal>
-        </div>
-      </section>
-
+     
       <div className="light-section ticker-wrap" style={{ borderColor: 'var(--line)' }}>
         <div className="ticker">
           {tickerList.map((n, i) => <span key={i}>{n}</span>)}
