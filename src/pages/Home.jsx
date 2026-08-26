@@ -71,11 +71,30 @@ export default function Home() {
         <div className="scroll-cue"><span className="bar"></span>Scroll</div>
       </section>
 
-      <QuoteBreak
+            <QuoteBreak
         eyebrow="In their words"
         quote="Football was my stepping stone to a better life"
         attribution="Doreen Nabwire"
       />
+
+      {/* ABOUT — who's behind this, before showing the athletes */}
+      <section id="about" className="light-section">
+        <div className="container">
+          <Reveal style={{ maxWidth: 780 }}>
+            <div className="eyebrow">About GameOn</div>
+            <h2 style={{ fontSize: 'clamp(2rem,4.2vw,3rem)', marginTop: 16 }}>We're building the infrastructure around the game.</h2>
+            <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', marginTop: 20, lineHeight: 1.7 }}>
+              GameOn Collective is a women's football platform based in Kenya. We bring together player and club data, athlete performance tracking, brand building and original football storytelling.
+            </p>
+            <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', marginTop: 16, lineHeight: 1.7 }}>
+              Our goal is simple: make players easier to discover, performance easier to understand, and the women's game easier to follow.
+            </p>
+            <Link to="/services" className="view-link" style={{ display: 'inline-block', marginTop: 26 }}>About GameOn →</Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* OUR PLAYERS — the 3 flagship athletes */}
 
       {/* OUR PLAYERS — the 3 flagship athletes */}
       <section id="our-players" className="light-section">
