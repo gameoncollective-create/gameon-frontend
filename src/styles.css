@@ -77,6 +77,7 @@
   .light-section .eyebrow{color:#8A6A00;}
   #our-players{overflow:hidden;}
   .light-section .eyebrow::before{background:#A9760A;}
+  .light-section, .segment-band{border-top:1px solid var(--line);}
 
   /* ===== Hub search (homepage Data Intelligence search) ===== */
   .hub-search{position:relative;max-width:640px;}
