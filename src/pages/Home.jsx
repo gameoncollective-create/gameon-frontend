@@ -231,30 +231,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SERVICES */}
+      
+            {/* SERVICES */}
       <section className="light-section">
         <div className="container">
-          <Reveal className="section-head" as="div">
-            <h2 style={{ fontSize: 'clamp(1.9rem,3.4vw,2.6rem)' }}>Services</h2>
+          <Reveal style={{ maxWidth: 780, marginBottom: 44 }}>
+            <div className="eyebrow">What We Do</div>
+            <h2 style={{ fontSize: 'clamp(1.9rem,3.6vw,2.8rem)', marginTop: 16 }}>Data. Performance. Visibility.</h2>
           </Reveal>
           <Reveal className="pillars cols-3">
             <div className="pillar">
               <div className="num">01</div>
-              <h3>Brand Building</h3>
-              <p>Helping players build a public identity backed by real performance — not just a highlight reel.</p>
-              <Link to="/services">View services →</Link>
+              <h3>Football Data</h3>
+              <p>Player profiles, club information, league standings and a growing searchable database of Kenya's women's football.</p>
+              <Link to="/data">Explore the database →</Link>
             </div>
             <div className="pillar">
               <div className="num">02</div>
-              <h3>Social Media</h3>
-              <p>Channel management, content calendars, and audience growth for athletes and clubs.</p>
-              <Link to="/services">View services →</Link>
+              <h3>Athlete Development</h3>
+              <p>Performance tracking, player profiles and brand development designed to help athletes build a stronger record on and off the pitch.</p>
+              <Link to="/services">Our athlete program →</Link>
             </div>
             <div className="pillar">
               <div className="num">03</div>
-              <h3>Content</h3>
-              <p>Original photography, video, and storytelling — grounded in real numbers, not just narrative.</p>
-              <Link to="/news">Read the latest →</Link>
+              <h3>Content &amp; Media</h3>
+              <p>Photography, video, social media and original football storytelling for players, clubs and partners.</p>
+              <Link to="/services">View our services →</Link>
             </div>
           </Reveal>
         </div>
