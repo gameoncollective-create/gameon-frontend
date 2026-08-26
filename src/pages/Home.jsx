@@ -115,15 +115,15 @@ export default function Home() {
         </div>
       </section> 
 
-      {/* DATA INTELLIGENCE — search + 4-tile quick nav */}
-      <section className="light-section" style={{ paddingBottom: 44 }}>
+            <section className="light-section" style={{ paddingBottom: 44 }}>
         <div className="container">
           <Reveal style={{ maxWidth: 760 }}>
             <div className="eyebrow">Data Intelligence</div>
-            <h2 style={{ fontSize: 'clamp(2.1rem,4.2vw,3.2rem)', marginTop: 16 }}>Search the database.</h2>
-            <p className="sub" style={{ marginTop: 12 }}>Every club and player across Kenya's women's football leagues — searchable in real time.</p>
+            <h2 style={{ fontSize: 'clamp(2.1rem,4.2vw,3.2rem)', marginTop: 16 }}>Search Kenya's women's football.</h2>
+            <p className="sub" style={{ marginTop: 12 }}>Find players and clubs across Kenya's women's football pyramid.</p>
+            <p className="sub" style={{ marginTop: 8 }}>Our database is growing as we add and update player, team and competition information across the women's game.</p>
           </Reveal>
-
+          
           {apiOffline && (
             <Reveal style={{
               marginTop: 24, background: 'rgba(217,80,58,0.08)', border: '1px solid var(--coral)',
