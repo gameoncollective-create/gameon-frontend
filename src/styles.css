@@ -353,6 +353,8 @@
   .contact-info .item{margin-bottom:28px;}
   .contact-info .item .label{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;color:var(--amber);letter-spacing:.05em;margin-bottom:7px;}
   .contact-info .item .val{font-size:1.08rem;font-weight:600;}
+  .contact-info .item .val a{border-bottom:1px solid var(--line-2);padding-bottom:2px;transition:.15s;}
+  .contact-info .item .val a:hover{color:var(--amber);border-color:var(--amber);}
   .contact-form{background:var(--bg-raised);border:1px solid var(--line);border-radius:24px;padding:34px;}
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
   .form-field{display:flex;flex-direction:column;gap:7px;}
@@ -409,10 +411,12 @@
    via <img>, falls back to a dark gradient if missing).
    .photo-hero-overlay is the separate legibility gradient
    that sits on top of the photo for text contrast.
+   .photo-hero-inner uses absolute+transform centering for a
+   guaranteed exact center, independent of the nav-offset
+   padding trick used on .photo-hero itself.
    ============================================ */
 .photo-hero{
-  position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
-  overflow:hidden;margin-top:-66px;padding-top:66px;color:#fff;
+  position:relative;min-height:100vh;overflow:hidden;margin-top:-66px;padding-top:66px;color:#fff;
   background:linear-gradient(160deg, #1a1015, #0B0B0E 70%);
 }
 .photo-hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:grayscale(1) contrast(1.05);}
@@ -427,16 +431,23 @@
   background-image:radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
   background-size:4px 4px;opacity:.4;mix-blend-mode:overlay;
 }
-.photo-hero-inner{position:relative;z-index:2;max-width:1320px;margin:0 auto;padding:0 32px;width:100%;text-align:center;}
+.photo-hero-inner{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  z-index:2;max-width:1320px;padding:0 32px;width:100%;text-align:center;
+}
+.photo-hero-eyebrow{
+  font-family:var(--mono);font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);
+  margin-bottom:20px;text-shadow:0 2px 10px rgba(0,0,0,.5);
+}
 .photo-hero-inner h1{
   font-family:var(--display);font-weight:400;text-transform:uppercase;color:#fff;
   font-size:clamp(3.4rem,9vw,7.6rem);line-height:.94;letter-spacing:0;
   text-shadow:0 4px 30px rgba(0,0,0,.5);max-width:20ch;margin:0 auto;
 }
-.photo-hero-sub{
-  font-family:var(--display);font-weight:400;text-transform:uppercase;color:#fff;
-  font-size:clamp(1.4rem,3.2vw,2.3rem);letter-spacing:.02em;margin-top:18px;
-  text-shadow:0 2px 20px rgba(0,0,0,.5);
+.photo-hero-desc{
+  font-family:var(--body);font-weight:400;color:rgba(255,255,255,.82);
+  font-size:clamp(1.05rem,1.8vw,1.3rem);line-height:1.6;margin:22px auto 0;max-width:44ch;
+  text-shadow:0 2px 14px rgba(0,0,0,.5);
 }
 .photo-hero-cta{margin-top:34px;display:flex;justify-content:center;}
 .photo-hero-cta .btn{background:var(--ink-solid);color:#fff;border:1px solid rgba(255,255,255,.2);font-size:.9rem;padding:16px 28px;}

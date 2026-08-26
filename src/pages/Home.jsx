@@ -1,3 +1,4 @@
+
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useGameOnData } from '../DataContext.jsx';
@@ -24,7 +25,6 @@ export default function Home() {
   const tickerNames = teamNames.length ? teamNames : ["Kenya Women's Premier League", 'National Super League', 'Division One'];
   const tickerList = [...tickerNames, ...tickerNames];
 
-  // Hub search
   const [q, setQ] = useState('');
   const [results, setResults] = useState([]);
   const [showDrop, setShowDrop] = useState(false);
@@ -56,15 +56,16 @@ export default function Home() {
 
   return (
     <>
-      {/* HERO — full-bleed photo treatment (self-contained max-width via .photo-hero-inner) */}
+      {/* HERO — full-bleed photo treatment */}
       <section className="photo-hero">
         <FallbackImage src="/images/hero.jpg" alt="" className="photo-hero-photo" />
         <div className="photo-hero-overlay"></div>
         <div className="photo-hero-inner">
-          <h1>Women's Football Intelligence</h1>
-          <div className="photo-hero-sub">Data. Branding. Visibility.</div>
+          <div className="photo-hero-eyebrow">Kenya Women's Football</div>
+          <h1>Find the players.<br />Know the teams.</h1>
+          <p className="photo-hero-desc">A growing home for player and club profiles across Kenya's women's leagues, from the Premier League to Division One.</p>
           <div className="photo-hero-cta">
-            <a href="#our-players" className="btn">See Players</a>
+            <Link to="/data" className="btn">Explore the database →</Link>
           </div>
         </div>
         <div className="scroll-cue"><span className="bar"></span>Scroll</div>
@@ -168,8 +169,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* BUILT FOR WHO'S ACTUALLY BUYING IN — moved ahead of Services since
-          establishing the market matters more than listing the offering */}
+      {/* AUDIENCES — photo-backed dark band, ahead of Services */}
       <section className="segment-band">
         <FallbackImage src="/images/segment-bg.jpg" alt="" className="segment-band-photo" />
         <div className="segment-band-overlay"></div>
@@ -207,6 +207,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SERVICES */}
       <section className="light-section">
         <div className="container">
           <Reveal className="section-head" as="div">
@@ -235,6 +236,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* CONTACT */}
       <section style={{ paddingBottom: 110 }}>
         <div className="container">
           <Reveal className="talk-block">
