@@ -72,16 +72,16 @@ export default function TeamProfile() {
         )}
       </div>
 
-      {hasAny ? Object.entries(groups).map(([key, list]) => list.length ? (
-        <div key={key} style={{ marginBottom: 32 }}>
+            {roster.length ? (
+        <div style={{ marginBottom: 32 }}>
           <h3 style={{ fontFamily: 'var(--display)', fontWeight: 400, fontSize: '1.3rem', marginBottom: 16, textTransform: 'uppercase' }}>
-            {GROUP_LABELS[key]}s
+            Squad
           </h3>
           <div className="grid cols-4">
-            {list.map(p => <PlayerCard key={p.id} player={p} />)}
+            {roster.map(p => <PlayerCard key={p.id} player={p} />)}
           </div>
         </div>
-      ) : null) : (
+      ) : (
         <div className="empty-state" style={{ textAlign: 'center', padding: '48px 24px' }}>
           <p style={{ margin: 0, fontSize: 15 }}>No roster data linked for this club yet.</p>
           <p style={{ margin: '8px 0 0', fontSize: 13, color: '#777' }}>
