@@ -3,8 +3,6 @@ import { useGameOnData } from '../../DataContext.jsx';
 import { posShort, API_BASE, initials } from '../../api.js';
 import PlayerCard from '../../components/PlayerCard.jsx';
 
-const GROUP_LABELS = { GK: 'Goalkeeper', DEF: 'Defender', MID: 'Midfielder', FWD: 'Forward' };
-
 function findStanding(standings, teamName) {
   if (!standings || !teamName) return null;
   const norm = s => s.toLowerCase().replace(/[^a-z]/g, '');
@@ -27,9 +25,6 @@ export default function TeamProfile() {
   }
 
   const roster = store.players.filter(p => String(p.team_id) === String(id));
-  const groups = { GK: [], DEF: [], MID: [], FWD: [] };
-  roster.forEach(p => groups[posShort(p.position)].push(p));
-  const hasAny = Object.values(groups).some(g => g.length);
   const standing = findStanding(store.premierStandings, team.name);
 
   return (
@@ -50,6 +45,12 @@ export default function TeamProfile() {
         <div style={{ flex: 1 }}>
           <div className="eyebrow">{team.city || 'Club profile'}</div>
           <h1 style={{ margin: 0 }}>{team.name}</h1>
+          {(team.founded_year || team.coach_name) && (
+            <div style={{ marginTop: 8, display: 'flex', gap: 20, fontSize: 13, color: '#999' }}>
+              {team.founded_year && <span>Founded <strong style={{ color: '#E7A33E' }}>{team.founded_year}</strong></span>}
+              {team.coach_name && <span>Coach <strong style={{ color: '#E7A33E' }}>{team.coach_name}</strong></span>}
+            </div>
+          )}
         </div>
 
         {standing && (
@@ -72,7 +73,13 @@ export default function TeamProfile() {
         )}
       </div>
 
-            {roster.length ? (
+      {team.description && (
+        <p style={{ maxWidth: 680, margin: '0 0 32px', fontSize: 14, lineHeight: 1.7, color: '#bbb' }}>
+          {team.description}
+        </p>
+      )}
+
+      {roster.length ? (
         <div style={{ marginBottom: 32 }}>
           <h3 style={{ fontFamily: 'var(--display)', fontWeight: 400, fontSize: '1.3rem', marginBottom: 16, textTransform: 'uppercase' }}>
             Squad
