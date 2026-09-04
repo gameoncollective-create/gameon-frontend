@@ -77,10 +77,13 @@ export default function Home() {
             <div className="eyebrow">About GameOn</div>
             <h2 style={{ fontSize: 'clamp(2rem,4.2vw,3rem)', marginTop: 16 }}>We're building the infrastructure around the game.</h2>
             <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', marginTop: 20, lineHeight: 1.7 }}>
-              GameOn Collective is a women's football platform based in Kenya. We bring together player and club data, athlete performance tracking, brand building and original football storytelling.
+              GameOn Collective is building the digital infrastructure for women's football in Kenya and across Africa.
             </p>
             <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', marginTop: 16, lineHeight: 1.7 }}>
-              Our goal is simple: make players easier to discover, performance easier to understand, and the women's game easier to follow.
+              We bring together searchable player profiles, team and league data, GPS performance insights, athlete development and original football media in one platform.
+            </p>
+            <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', marginTop: 16, lineHeight: 1.7 }}>
+              Our goal is simple: make women's football easier to discover, understand and invest in — while giving players the data, visibility and tools to build careers on and off the pitch.
             </p>
             <Link to="/services" className="view-link" style={{ display: 'inline-block', marginTop: 26 }}>About GameOn →</Link>
           </Reveal>
@@ -90,7 +93,7 @@ export default function Home() {
       {/* OUR PLAYERS — the 3 flagship athletes */}
       <section id="our-players" className="light-section">
         <div className="container">
-                    <Reveal style={{ maxWidth: 780, marginBottom: 44 }}>
+          <Reveal style={{ maxWidth: 780, marginBottom: 44 }}>
             <div className="eyebrow">Athlete Program</div>
             <h2 style={{ fontSize: 'clamp(1.9rem,3.6vw,2.8rem)', marginTop: 16 }}>Meet the players we're building with.</h2>
             <p style={{ fontSize: '1.05rem', color: 'var(--text-dim)', marginTop: 18, lineHeight: 1.7 }}>
