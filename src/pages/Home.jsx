@@ -70,24 +70,34 @@ export default function Home() {
         <div className="scroll-cue"><span className="bar"></span>Scroll</div>
       </section>
 
-      {/* ABOUT — who's behind this */}
+           {/* ABOUT — who's behind this */}
       <section id="about" className="light-section">
         <div className="container">
-          <Reveal style={{ maxWidth: 780 }}>
-            <div className="eyebrow">About GameOn</div>
-            <h2 style={{ fontSize: 'clamp(2rem,4.2vw,3rem)', marginTop: 16 }}>We're building the infrastructure around the game.</h2>
-            <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', marginTop: 20, lineHeight: 1.7 }}>
-              GameOn Collective is building the digital infrastructure for women's football in Kenya and across Africa.
-            </p>
-            <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', marginTop: 16, lineHeight: 1.7 }}>
-              We bring together searchable player profiles, team and league data, GPS performance insights, athlete development and original football media in one platform.
-            </p>
-            <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', marginTop: 16, lineHeight: 1.7 }}>
-              Our goal is simple: make women's football easier to discover, understand and invest in — while giving players the data, visibility and tools to build careers on and off the pitch.
-            </p>
-            <Link to="/services" className="view-link" style={{ display: 'inline-block', marginTop: 26 }}>About GameOn →</Link>
-          </Reveal>
+          <div style={{ display: 'flex', gap: 48, alignItems: 'center', flexWrap: 'wrap' }}>
+            <Reveal style={{ maxWidth: 640, flex: '1 1 480px' }}>
+              <div className="eyebrow">About GameOn</div>
+              <h2 style={{ fontSize: 'clamp(2rem,4.2vw,3rem)', marginTop: 16 }}>We're building the infrastructure around the game.</h2>
+              <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', marginTop: 20, lineHeight: 1.7 }}>
+                GameOn Collective is building the digital infrastructure for women's football in Kenya and across Africa.
+              </p>
+              <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', marginTop: 16, lineHeight: 1.7 }}>
+                We bring together searchable player profiles, team and league data, GPS performance insights, athlete development and original football media in one platform.
+              </p>
+              <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', marginTop: 16, lineHeight: 1.7 }}>
+                Our goal is simple: make women's football easier to discover, understand and invest in — while giving players the data, visibility and tools to build careers on and off the pitch.
+              </p>
+              <Link to="/services" className="view-link" style={{ display: 'inline-block', marginTop: 26 }}>About GameOn →</Link>
+            </Reveal>
+            <Reveal style={{ flex: '1 1 360px', minWidth: 320 }}>
+              <FallbackImage
+                src="/images/esse-akida.jpg"
+                alt="Esse Akida celebrating a goal"
+                style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 8 }}
+              />
+            </Reveal>
+          </div>
         </div>
+    
       </section>
 
       {/* OUR PLAYERS — the 3 flagship athletes */}
