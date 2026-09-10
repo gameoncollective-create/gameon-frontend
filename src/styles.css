@@ -506,6 +506,9 @@
 .athlete-meta-row .meta-value{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:1.3rem;}
 @media(max-width:800px){ .athlete-profile{grid-template-columns:1fr;} .athlete-grid{grid-template-columns:1fr;} }
 
+.about-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:48px;align-items:center;}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr;}}
+
 /* ============================================
    DATA INTELLIGENCE TILE NAV — 4-block quick nav.
    Sized to be a real visual anchor, not a small nav
