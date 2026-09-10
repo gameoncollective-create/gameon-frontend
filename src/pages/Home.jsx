@@ -70,11 +70,11 @@ export default function Home() {
         <div className="scroll-cue"><span className="bar"></span>Scroll</div>
       </section>
 
-           {/* ABOUT — who's behind this */}
+      {/* ABOUT — who's behind this */}
       <section id="about" className="light-section">
         <div className="container">
-          <div style={{ display: 'flex', gap: 48, alignItems: 'center', flexWrap: 'wrap' }}>
-            <Reveal style={{ maxWidth: 640, flex: '1 1 480px' }}>
+          <div className="about-grid">
+            <Reveal style={{ maxWidth: 640 }}>
               <div className="eyebrow">About GameOn</div>
               <h2 style={{ fontSize: 'clamp(2rem,4.2vw,3rem)', marginTop: 16 }}>We're building the infrastructure around the game.</h2>
               <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', marginTop: 20, lineHeight: 1.7 }}>
@@ -88,7 +88,7 @@ export default function Home() {
               </p>
               <Link to="/services" className="view-link" style={{ display: 'inline-block', marginTop: 26 }}>About GameOn →</Link>
             </Reveal>
-            <Reveal style={{ flex: '1 1 360px', minWidth: 320 }}>
+            <Reveal>
               <FallbackImage
                 src="/images/esse-akida.jpg"
                 alt="Esse Akida celebrating a goal"
@@ -97,7 +97,6 @@ export default function Home() {
             </Reveal>
           </div>
         </div>
-    
       </section>
 
       {/* OUR PLAYERS — the 3 flagship athletes */}
@@ -181,21 +180,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* QUOTE — moved here, right before "Let's make the difference" */}
+      {/* QUOTE — sits right before the ticker */}
       <QuoteBreak
         eyebrow="In their words"
         quote="Football was my stepping stone to a better life"
         attribution="Doreen Nabwire"
       />
 
-     
       <div className="light-section ticker-wrap" style={{ borderColor: 'var(--line)' }}>
         <div className="ticker">
           {tickerList.map((n, i) => <span key={i}>{n}</span>)}
         </div>
       </div>
 
-            {/* AUDIENCES — photo-backed dark band */}
+      {/* AUDIENCES — photo-backed dark band */}
       <section className="segment-band">
         <FallbackImage src="/images/segment-bg.jpg" alt="" className="segment-band-photo" />
         <div className="segment-band-overlay"></div>
@@ -226,10 +224,9 @@ export default function Home() {
             </div>
           </Reveal>
         </div>
-      </section> 
+      </section>
 
-      
-            {/* SERVICES */}
+      {/* SERVICES */}
       <section className="light-section">
         <div className="container">
           <Reveal style={{ maxWidth: 780, marginBottom: 44 }}>
@@ -277,4 +274,3 @@ export default function Home() {
     </>
   );
 }
-
