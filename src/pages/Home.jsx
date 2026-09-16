@@ -9,10 +9,10 @@ import FallbackImage from '../components/FallbackImage.jsx';
 import { ATHLETES } from '../athletesData.js';
 
 const DI_TILES = [
-  { label: 'Players', to: '/data/players', photo: '/images/tiles/players.jpg' },
-  { label: 'Teams', to: '/data/teams', photo: '/images/tiles/teams.jpg' },
-  { label: 'Standings', to: '/data/standings', photo: '/images/tiles/standings.jpg' },
-  { label: 'Performance', to: '/data/gps', photo: '/images/tiles/performance.jpg' }
+  { label: 'Players', to: '/data/players', photo: '/images/players.jpg' },
+  { label: 'Teams', to: '/data/teams', photo: '/images/teams.jpg' },
+  { label: 'Standings', to: '/data/standings', photo: '/images/standings.jpg' },
+  { label: 'Performance', to: '/data/gps', photo: '/images/performance.jpg' }
 ];
 
 export default function Home() {
@@ -274,4 +274,3 @@ export default function Home() {
     </>
   );
 }
-
