@@ -23,8 +23,8 @@ export default function Services() {
           <Reveal className="service-block">
             <div>
               <div className="service-index">Service 01</div>
-              <h3>Athlete Brand Building</h3>
-              <p>We help players and clubs define a public identity that matches who they actually are — on the pitch and off it — then build the assets to carry it.</p>
+              <h3>DATA & PERFORMANCE</h3>
+              <p> We turn football data into useful information for players and clubs — documenting performance, identifying trends and building a clearer picture of development across matches and seasons.</p>
               <ul className="service-list">
                 <li>Personal &amp; club brand strategy</li>
                 <li>Athlete profile pages, powered by real performance data</li>
