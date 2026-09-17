@@ -50,7 +50,7 @@ export default function Services() {
                 <li>Fixtures, results and player milestone content</li>
                 <li>Data-led graphics, features and campaigns</li>
               </ul>
-              <Link to="/contact" className="btn btn-outline">Talk social strategy →</Link>
+              <Link to="/contact" className="btn btn-outline">TALK CONTENT & MEDIA →</Link>
             </div>
             <div className="service-visual tile-c">
               <span className="tag-word">SOCIAL</span>
