@@ -47,7 +47,7 @@ export default function Services() {
               <ul className="service-list">
                 <li>Personal brand strategy and positioning</li>
                 <li>Professional player profiles and career portfolios</li>
-                <li><Career statistics, achievements and player stories/li>
+                <li><Career statistics, achievements and player stories</li>
                 <li>Sponsor-ready media kits and player one-pagers</li>
                   <Link to="/contact" className="btn btn-outline">BUILD YOUR BRAND→</Link>
               </ul>
