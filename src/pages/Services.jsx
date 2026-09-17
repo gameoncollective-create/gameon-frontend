@@ -10,7 +10,8 @@ export default function Services() {
         <div className="container">
           <div className="eyebrow">Services</div>
           <h1 style={{ fontSize: 'clamp(2.8rem,7vw,5.6rem)', margin: '20px 0 22px', maxWidth: '16ch' }}>
-            Off-pitch growth for the people carrying the game.
+            DATA FOR THE GAME.VISIBILITY FOR THE PEOPLE IN IT.
+                              
           </h1>
           <p style={{ color: 'var(--text-dim)', maxWidth: '62ch', fontSize: '1.1rem' }}>
             Alongside our data platform, GameOn Collective runs hands-on brand and media services — turning performance data and matchday moments into something players and clubs can build a following, and a career, on.
