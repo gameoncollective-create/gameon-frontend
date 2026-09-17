@@ -42,15 +42,16 @@ export default function Services() {
           <Reveal className="service-block reverse">
             <div>
               <div className="service-index">Service 02</div>
-              <h3>CONTENT & VISIBILITY</h3>
-              <p>We help women’s football clubs, players and organisations show up consistently and professionally — combining social media management, matchday coverage and data-led storytelling.</p>
+              <h3>ATHLETE BRAND BUILDING</h3>
+              <p>We help women footballers build a professional identity around their career, achievements and story — creating the tools they need to present themselves to clubs, media, sponsors and future opportunities.</p>
               <ul className="service-list">
-                <li>Social media management for clubs</li>
-                <li>Matchday photography and video</li>
-                <li>Fixtures, results and player milestone content</li>
-                <li>Data-led graphics, features and campaigns</li>
+                <li>Personal brand strategy and positioning</li>
+                <li>Professional player profiles and career portfolios</li>
+                <li><Career statistics, achievements and player stories/li>
+                <li>Sponsor-ready media kits and player one-pagers</li>
+                  <Link to="/contact" className="btn btn-outline">BUILD YOUR BRAND→</Link>
               </ul>
-              <Link to="/contact" className="btn btn-outline">TALK CONTENT & MEDIA →</Link>
+              <Link to="/contact" className="btn btn-outline"> →</Link>
             </div>
             <div className="service-visual tile-c">
               <span className="tag-word">SOCIAL</span>
