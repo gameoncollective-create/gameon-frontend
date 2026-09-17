@@ -26,10 +26,10 @@ export default function Services() {
               <h3>DATA & PERFORMANCE</h3>
               <p> We turn football data into useful information for players and clubs — documenting performance, identifying trends and building a clearer picture of development across matches and seasons.</p>
               <ul className="service-list">
-                <li>Personal &amp; club brand strategy</li>
-                <li>Athlete profile pages, powered by real performance data</li>
+                <li>Player and team performance analysis</li>
+                <li>Professional player profiles and career portfolios</li>
+                <li>Career statistics, achievements and player stories</li>
                 <li>Sponsor-ready media kits and player one-pagers</li>
-                <li>Guidance on partnerships and commercial opportunities</li>
               </ul>
               <Link to="/contact" className="btn btn-outline">Start a brand conversation →</Link>
             </div>
