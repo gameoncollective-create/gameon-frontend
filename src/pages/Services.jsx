@@ -10,11 +10,11 @@ export default function Services() {
         <div className="container">
           <div className="eyebrow">Services</div>
           <h1 style={{ fontSize: 'clamp(2.8rem,7vw,5.6rem)', margin: '20px 0 22px', maxWidth: '16ch' }}>
-            DATA FOR THE GAME.VISIBILITY FOR THE PEOPLE IN IT.
-                              
+            DATA FOR THE GAME. VISIBILITY FOR THE PEOPLE IN IT.
           </h1>
           <p style={{ color: 'var(--text-dim)', maxWidth: '62ch', fontSize: '1.1rem' }}>
-          GameOn Collective works across data, performance and media to help build a stronger women’s football ecosystem in Kenya — giving players and clubs better information, stronger identities and greater visibility.          </p>
+            GameOn Collective works across data, performance and media to help build a stronger women's football ecosystem in Kenya — giving players and clubs better information, stronger identities and greater visibility.
+          </p>
         </div>
       </section>
 
@@ -24,7 +24,7 @@ export default function Services() {
             <div>
               <div className="service-index">Service 01</div>
               <h3>DATA & PERFORMANCE</h3>
-              <p> We turn football data into useful information for players and clubs — documenting performance, identifying trends and building a clearer picture of development across matches and seasons.</p>
+              <p>We turn football data into useful information for players and clubs — documenting performance, identifying trends and building a clearer picture of development across matches and seasons.</p>
               <ul className="service-list">
                 <li>Player and team performance analysis</li>
                 <li>Professional player profiles and career portfolios</li>
@@ -47,11 +47,10 @@ export default function Services() {
               <ul className="service-list">
                 <li>Personal brand strategy and positioning</li>
                 <li>Professional player profiles and career portfolios</li>
-                <li><Career statistics, achievements and player stories</li>
+                <li>Career statistics, achievements and player stories</li>
                 <li>Sponsor-ready media kits and player one-pagers</li>
-                  <Link to="/contact" className="btn btn-outline">BUILD YOUR BRAND→</Link>
               </ul>
-              <Link to="/contact" className="btn btn-outline"> →</Link>
+              <Link to="/contact" className="btn btn-outline">BUILD YOUR BRAND →</Link>
             </div>
             <div className="service-visual tile-c">
               <span className="tag-word">SOCIAL</span>
@@ -63,7 +62,7 @@ export default function Services() {
             <div>
               <div className="service-index">Service 03</div>
               <h3>CONTENT & VISIBILITY</h3>
-              <p>Make the women’s game impossible to overlook. We create and manage content for women’s football clubs, players and organisations in Kenya — combining social media, matchday coverage and data-led storytelling to build stronger visibility around the game.</p>
+              <p>Make the women's game impossible to overlook. We create and manage content for women's football clubs, players and organisations in Kenya — combining social media, matchday coverage and data-led storytelling to build stronger visibility around the game.</p>
               <ul className="service-list">
                 <li>Social media management for football clubs</li>
                 <li>Matchday photography and video</li>
