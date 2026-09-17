@@ -14,8 +14,7 @@ export default function Services() {
                               
           </h1>
           <p style={{ color: 'var(--text-dim)', maxWidth: '62ch', fontSize: '1.1rem' }}>
-            Alongside our data platform, GameOn Collective runs hands-on brand and media services — turning performance data and matchday moments into something players and clubs can build a following, and a career, on.
-          </p>
+          GameOn Collective works across data, performance and media to help build a stronger women’s football ecosystem in Kenya — giving players and clubs better information, stronger identities and greater visibility.          </p>
         </div>
       </section>
 
