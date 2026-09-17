@@ -42,13 +42,13 @@ export default function Services() {
           <Reveal className="service-block reverse">
             <div>
               <div className="service-index">Service 02</div>
-              <h3>Social Media</h3>
-              <p>Consistent, well-produced presence across platforms — so attention earned on matchday doesn't disappear by Monday.</p>
+              <h3>CONTENT & VISIBILITY</h3>
+              <p>We help women’s football clubs, players and organisations show up consistently and professionally — combining social media management, matchday coverage and data-led storytelling.</p>
               <ul className="service-list">
-                <li>Channel setup, strategy and content calendars</li>
-                <li>Matchday coverage and highlight packaging</li>
-                <li>Community management and audience growth</li>
-                <li>Performance reporting tied back to real engagement data</li>
+                <li>Social media management for clubs</li>
+                <li>Matchday photography and video</li>
+                <li>Fixtures, results and player milestone content</li>
+                <li>Data-led graphics, features and campaigns</li>
               </ul>
               <Link to="/contact" className="btn btn-outline">Talk social strategy →</Link>
             </div>
