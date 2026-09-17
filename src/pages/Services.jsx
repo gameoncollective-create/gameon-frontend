@@ -61,18 +61,18 @@ export default function Services() {
           <Reveal className="service-block">
             <div>
               <div className="service-index">Service 03</div>
-              <h3>Content Strategy</h3>
-              <p>Original photography, video, and written storytelling from pitchside — built for players, clubs, federations, and the partners backing them.</p>
+              <h3>CONTENT & VISIBILITY</h3>
+              <p>Make the women’s game impossible to overlook. We create and manage content for women’s football clubs, players and organisations in Kenya — combining social media, matchday coverage and data-led storytelling to build stronger visibility around the game.</p>
               <ul className="service-list">
-                <li>Matchday photography and video coverage</li>
-                <li>Player features and long-form storytelling</li>
-                <li>Sponsor and partner campaign content</li>
-                <li>Archival footage and season recap packages</li>
+                <li>Social media management for football clubs</li>
+                <li>Matchday photography and video</li>
+                <li>Data-led graphics and performance stories</li>
+                <li>Player, club and partner campaigns</li>
               </ul>
-              <Link to="/contact" className="btn btn-outline">Commission content →</Link>
+              <Link to="/contact" className="btn btn-outline">TALK CONTENT & MEDIA →</Link>
             </div>
             <div className="service-visual tile-d">
-              <span className="tag-word">STORY</span>
+              <span className="tag-word">CONTENT</span>
               <div className="fg"><div className="metric">6+</div><div className="metric-label">Original stories published monthly</div></div>
             </div>
           </Reveal>
