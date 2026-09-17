@@ -31,7 +31,7 @@ export default function Services() {
                 <li>Career statistics, achievements and player stories</li>
                 <li>Sponsor-ready media kits and player one-pagers</li>
               </ul>
-              <Link to="/contact" className="btn btn-outline">Start a brand conversation →</Link>
+              <Link to="/contact" className="btn btn-outline">BUILD YOUR BRAND →</Link>
             </div>
             <div className="service-visual tile-a">
               <span className="tag-word">BRAND</span>
