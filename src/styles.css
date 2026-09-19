@@ -209,11 +209,11 @@
   .player-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
   .player-card-top .info h4{font-family:var(--display);font-weight:400;font-size:1.2rem;text-transform:uppercase;letter-spacing:0;}
   .player-card-top .info p{font-family:var(--mono);font-size:.68rem;color:var(--text-dim);text-transform:uppercase;margin-top:4px;}
-  .pos-badge{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:20px;font-weight:700;flex-shrink:0;}
-  .pos-GK{background:rgba(255,79,160,0.18);color:var(--violet);}
-  .pos-DEF{background:rgba(27,127,176,0.18);color:var(--teal);}
-  .pos-MID{background:rgba(255,255,255,0.1);color:var(--text);}
-  .pos-FWD{background:rgba(237,21,111,0.16);color:var(--coral);}
+  .pos-badge{font-family:var(--mono);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;padding:6px 12px;border-radius:20px;font-weight:700;flex-shrink:0;}
+  .pos-GK{background:rgba(255,79,160,0.3);color:#FF9BD1;}
+  .pos-DEF{background:rgba(27,127,176,0.35);color:#6ACBF0;}
+  .pos-MID{background:rgba(255,255,255,0.2);color:#FFFFFF;}
+  .pos-FWD{background:rgba(237,21,111,0.28);color:#FF7BAA;}
   .card-stats-row{display:flex;gap:14px;font-family:var(--mono);font-size:.76rem;color:var(--text-dim);}
   .card-stats-row b{color:var(--text);}
 
