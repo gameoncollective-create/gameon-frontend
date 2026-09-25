@@ -6,7 +6,7 @@
 export const ATHLETES = [
   {
     slug: 'marline-atieno',
-    photo: '/images/athletes/Marline%20Atieno.jpeg',
+    photo: '/images/athletes/Marline-Atieno.jpeg',
     number: '18',
     name: 'Marline Atieno',
     firstName: 'Marline',
