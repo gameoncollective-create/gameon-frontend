@@ -5,39 +5,42 @@
 // Jersey number, birth year, and height are still TBD.
 export const ATHLETES = [
   {
-    slug: 'gameon-athlete-1',
-    photo: '/images/athletes/jersey-greatness.jpg',
-    number: 'TBD',
-    name: 'Coming Soon',
-    firstName: 'Coming Soon',
-    club: 'TBD',
-    position: 'Midfielder',
-    birthYear: 'TBD',
-    height: 'TBD',
-    bio: "Profile details coming soon as we finalize our next athlete partner."
+    slug: 'marline-atieno',
+    photo: '/images/athletes/Marline%20Atieno.jpeg',
+    number: '18',
+    name: 'Marline Atieno',
+    firstName: 'Marline',
+    club: 'Mathare United Women FC',
+    position: 'Center Back',
+    foot: 'Right',
+    age: '25',
+    height: '',
+    bio: "Marline Atieno is a right-footed center back for Mathare United Women FC and one of GameOn Collective's featured athletes."
   },
   {
-    slug: 'gameon-athlete-2',
-    photo: '/images/athletes/jersey-greatness.jpg',
-    number: 'TBD',
-    name: 'Coming Soon',
-    firstName: 'Coming Soon',
-    club: 'TBD',
-    position: 'Left Winger',
-    birthYear: 'TBD',
-    height: 'TBD',
-    bio: "Profile details coming soon as we finalize our next athlete partner."
+    slug: 'veronicah-nyambura',
+    photo: '/images/athletes/Veronicah-Nyambura.png',
+    number: '7',
+    name: 'Veronicah Nyambura',
+    firstName: 'Veronicah',
+    club: 'Mathare United Women FC',
+    position: 'Right Back',
+    foot: 'Right',
+    age: '25',
+    height: '',
+    bio: "Veronicah Nyambura is a right-footed right back for Mathare United Women FC and one of GameOn Collective's featured athletes."
   },
   {
-    slug: 'gameon-athlete-3',
-    photo: '/images/athletes/jersey-greatness.jpg',
-    number: 'TBD',
-    name: 'Coming Soon',
-    firstName: 'Coming Soon',
-    club: 'TBD',
+    slug: 'iddah-adhiambo',
+    photo: '/images/athletes/Iddah-Adhiambo.png',
+    number: '24',
+    name: 'Iddah Adhiambo',
+    firstName: 'Iddah',
+    club: 'Mathare United Women FC',
     position: 'Forward',
-    birthYear: 'TBD',
-    height: 'TBD',
-    bio: "Profile details coming soon as we finalize our next athlete partner."
+    foot: 'Right',
+    age: '28',
+    height: '',
+    bio: "Iddah Adhiambo is a right-footed forward for Mathare United Women FC and one of GameOn Collective's featured athletes."
   }
 ];
