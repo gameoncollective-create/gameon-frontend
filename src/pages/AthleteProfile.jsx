@@ -34,14 +34,24 @@ export default function AthleteProfile() {
               </div>
             </div>
             <div className="athlete-meta-row">
-              <div className="meta-item">
-                <div className="meta-label">Birth Year</div>
-                <div className="meta-value">{athlete.birthYear}</div>
-              </div>
-              <div className="meta-item">
-                <div className="meta-label">Height</div>
-                <div className="meta-value">{athlete.height}</div>
-              </div>
+              {athlete.age && (
+                <div className="meta-item">
+                  <div className="meta-label">Age</div>
+                  <div className="meta-value">{athlete.age}</div>
+                </div>
+              )}
+              {athlete.foot && (
+                <div className="meta-item">
+                  <div className="meta-label">Preferred Foot</div>
+                  <div className="meta-value">{athlete.foot}</div>
+                </div>
+              )}
+              {athlete.height && (
+                <div className="meta-item">
+                  <div className="meta-label">Height</div>
+                  <div className="meta-value">{athlete.height}</div>
+                </div>
+              )}
             </div>
             <div className="athlete-follow">
               <div className="follow-label">Follow</div>
