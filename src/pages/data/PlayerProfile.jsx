@@ -65,8 +65,9 @@ export default function PlayerProfile() {
               <div className="gps-row"><span>Total distance</span><b>{gps.total_distance_km} km</b></div>
               <div className="gps-row"><span>Max speed</span><b>{gps.max_speed_kmh} km/h</b></div>
               <div className="gps-row"><span>Sprints</span><b>{gps.sprints}</b></div>
+              <div className="gps-row"><span>Accelerations</span><b>{gps.accelerations}</b></div>
+              <div className="gps-row"><span>Decelerations</span><b>{gps.decelerations}</b></div>
               <div className="gps-row"><span>Work rate</span><b>{gps.work_rate_percent}%</b></div>
-              <div className="gps-row"><span>Avg heart rate</span><b>{gps.avg_heart_rate}</b></div>
             </>
           ) : (
             <div className="pending-note">Not part of the current GPS pilot — GameOn Collective is tracking 3 players at a time with 3 vests, expanding as the program grows.</div>
