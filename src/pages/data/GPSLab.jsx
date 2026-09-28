@@ -38,7 +38,7 @@ export default function GPSLab() {
 
   const days = daysUntil(TRACKING_START);
   const completed = GPS_SESSIONS.filter(s => s.status === 'completed').length;
-  const live = days <= 0 || completed > 0;
+  const hasStarted = days <= 0 || completed > 0;
 
   const countdown =
     completed > 0 ? `${completed} session${completed > 1 ? 's' : ''} recorded`
