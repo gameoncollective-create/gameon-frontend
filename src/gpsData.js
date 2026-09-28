@@ -1,4 +1,4 @@
-/ GPS Lab data — Titan by Hudl.
+// GPS Lab data — Titan by Hudl.
 // Tracking kicks off Sunday 27 September 2026 with 3 vests.
 //
 // HOW TO UPDATE AFTER A SESSION
