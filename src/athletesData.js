@@ -20,7 +20,7 @@ export const ATHLETES = [
   {
     slug: 'veronicah-nyambura',
     photo: '/images/athletes/Veronicah-Nyambura.png',
-    number: '7',
+    number: '17',
     name: 'Veronicah Nyambura',
     firstName: 'Veronicah',
     club: 'Mathare United Women FC',
