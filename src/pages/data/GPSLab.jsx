@@ -8,22 +8,32 @@ import {
   VEST_ASSIGNMENTS,
   GPS_SESSIONS,
   GPS_METRICS,
-  GPS_STATS,
   GPS_SESSION_STATS,
 } from '../../gpsData.js';
 import FallbackImage from '../../components/FallbackImage.jsx';
 
-// Today's date in Nairobi.
+// Get today's date in Nairobi.
 function todayNairobi() {
-  return new Intl.DateTimeFormat('en-CA', {
+  const parts = new Intl.DateTimeFormat('en-GB', {
     timeZone: 'Africa/Nairobi',
-  }).format(new Date());
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(new Date());
+
+  const get = type =>
+    parts.find(part => part.type === type)?.value;
+
+  return `${get('year')}-${get('month')}-${get('day')}`;
 }
 
 function daysUntil(iso) {
-  const a = Date.parse(todayNairobi() + 'T00:00:00Z');
-  const b = Date.parse(iso + 'T00:00:00Z');
-  return Math.round((b - a) / 86400000);
+  const today = Date.parse(
+    todayNairobi() + 'T00:00:00Z'
+  );
+  const target = Date.parse(iso + 'T00:00:00Z');
+
+  return Math.round((target - today) / 86400000);
 }
 
 function prettyDate(
@@ -35,13 +45,12 @@ function prettyDate(
     year: 'numeric',
   }
 ) {
-  return new Date(iso + 'T12:00:00Z').toLocaleDateString(
-    'en-GB',
-    {
-      ...opts,
-      timeZone: 'UTC',
-    }
-  );
+  return new Date(
+    iso + 'T12:00:00Z'
+  ).toLocaleDateString('en-GB', {
+    ...opts,
+    timeZone: 'UTC',
+  });
 }
 
 function fmt(value, unit) {
@@ -59,17 +68,20 @@ function fmt(value, unit) {
       ? Number(value.toFixed(2))
       : value;
 
-  return unit ? `${display} ${unit}` : String(display);
+  return unit
+    ? `${display} ${unit}`
+    : String(display);
 }
 
 function lastName(athlete) {
   return (
-    athlete.name.replace(athlete.firstName, '').trim() ||
     athlete.name
+      .replace(athlete.firstName, '')
+      .trim() || athlete.name
   );
 }
 
-function seasonLabel(metric) {
+function summaryLabel(metric) {
   if (metric.key === 'max_speed_kmh') {
     return 'Top speed (best)';
   }
@@ -79,12 +91,13 @@ function seasonLabel(metric) {
   }
 
   if (metric.key === 'workload') {
-    return 'Total Player Load';
+    return 'Player Load (total)';
   }
 
   return `${metric.label} (total)`;
 }
 
+// Metrics that can be added across matches.
 const SUM_METRICS = [
   'distance_km',
   'hsr_m',
@@ -95,23 +108,30 @@ const SUM_METRICS = [
   'duration_min',
 ];
 
+// Metrics where we show the highest recorded value.
 const MAX_METRICS = [
   'max_speed_kmh',
   'peak_accel_ms2',
 ];
 
-// Only calculate a total when every recorded match
-// has a verified value for that metric.
+// Calculate combined statistics.
+// A total is shown only when every completed match
+// has a verified reading for that metric.
 function combinedStats(slug) {
-  const records = GPS_SESSIONS
-    .filter(session => session.status === 'completed')
-    .map(session => GPS_SESSION_STATS[session.date]?.[slug])
-    .filter(Boolean);
+  const completedSessions = GPS_SESSIONS.filter(
+    session => session.status === 'completed'
+  );
+
+  const records = completedSessions.map(
+    session => GPS_SESSION_STATS[session.date]?.[slug]
+  );
 
   const result = {};
 
   GPS_METRICS.forEach(metric => {
-    const values = records.map(record => record[metric.key]);
+    const values = records.map(
+      record => record?.[metric.key]
+    );
 
     const complete =
       records.length > 0 &&
@@ -129,7 +149,7 @@ function combinedStats(slug) {
     if (SUM_METRICS.includes(metric.key)) {
       result[metric.key] = Number(
         values
-          .reduce((sum, value) => sum + value, 0)
+          .reduce((total, value) => total + value, 0)
           .toFixed(2)
       );
     } else if (MAX_METRICS.includes(metric.key)) {
@@ -142,26 +162,52 @@ function combinedStats(slug) {
   return result;
 }
 
+// Styles for the match-selection buttons.
+function matchButtonStyle(active) {
+  return {
+    cursor: 'pointer',
+    padding: '11px 17px',
+    borderRadius: '8px',
+    border: active
+      ? '1px solid #00d5c5'
+      : '1px solid rgba(255,255,255,0.22)',
+    background: active
+      ? '#00d5c5'
+      : 'transparent',
+    color: active
+      ? '#001a22'
+      : 'var(--text, #ffffff)',
+    fontWeight: 700,
+    fontSize: '0.88rem',
+    fontFamily: 'inherit',
+    transition: 'background 0.2s ease',
+  };
+}
+
 export default function GPSLab() {
   const athletes = ATHLETES.filter(
     athlete => VEST_ASSIGNMENTS[athlete.slug]
   );
 
-  const [slug, setSlug] = useState(athletes[0]?.slug);
-
-  // The newest match is selected when the page opens.
-  const completedSessions = GPS_SESSIONS
-    .filter(session => session.status === 'completed')
-    .sort((a, b) => b.date.localeCompare(a.date));
-
-  const newestDate = completedSessions[0]?.date || 'all';
-
-  const [selectedMatch, setSelectedMatch] = useState(
-    newestDate
+  const [slug, setSlug] = useState(
+    athletes[0]?.slug
   );
 
+  // Show the combined statistics by default.
+  const [selectedMatch, setSelectedMatch] =
+    useState('all');
+
   const athlete =
-    athletes.find(a => a.slug === slug) || athletes[0];
+    athletes.find(a => a.slug === slug) ||
+    athletes[0];
+
+  const completedSessions = GPS_SESSIONS
+    .filter(
+      session => session.status === 'completed'
+    )
+    .sort(
+      (a, b) => a.date.localeCompare(b.date)
+    );
 
   const days = daysUntil(TRACKING_START);
   const completed = completedSessions.length;
@@ -169,20 +215,14 @@ export default function GPSLab() {
 
   const countdown =
     completed > 0
-      ? `${completed} session${completed > 1 ? 's' : ''} recorded`
+      ? `${completed} session${
+          completed > 1 ? 's' : ''
+        } recorded`
       : days > 1
         ? `Starts in ${days} days`
         : days === 1
           ? 'Starts tomorrow'
           : 'Starts today';
-
-  const stats = GPS_STATS[athlete?.slug] || {
-    sessions: 0,
-    latest: {},
-    season: {},
-  };
-
-  const hasData = stats.sessions > 0;
 
   const isAllMatches = selectedMatch === 'all';
 
@@ -190,10 +230,21 @@ export default function GPSLab() {
     session => session.date === selectedMatch
   );
 
+  const athleteSessions = completedSessions.filter(
+    session =>
+      GPS_SESSION_STATS[session.date]?.[
+        athlete?.slug
+      ]
+  );
+
+  const hasData = athleteSessions.length > 0;
+
   const displayedStats = athlete
     ? isAllMatches
       ? combinedStats(athlete.slug)
-      : GPS_SESSION_STATS[selectedMatch]?.[athlete.slug] || {}
+      : GPS_SESSION_STATS[selectedMatch]?.[
+          athlete.slug
+        ] || {}
     : {};
 
   const statsTitle = isAllMatches
@@ -201,7 +252,11 @@ export default function GPSLab() {
     : activeSession
       ? `Match statistics — ${prettyDate(
           activeSession.date,
-          { day: 'numeric', month: 'long', year: 'numeric' }
+          {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          }
         )}`
       : 'Match statistics';
 
@@ -215,7 +270,8 @@ export default function GPSLab() {
 
         <h2
           style={{
-            fontSize: 'clamp(2rem,4.4vw,3rem)',
+            fontSize:
+              'clamp(2rem,4.4vw,3rem)',
             margin: '14px 0',
           }}
         >
@@ -223,7 +279,10 @@ export default function GPSLab() {
             ? 'GPS tracking is active'
             : `GPS tracking starts ${prettyDate(
                 TRACKING_START,
-                { day: 'numeric', month: 'long' }
+                {
+                  day: 'numeric',
+                  month: 'long',
+                }
               )}`}
         </h2>
 
@@ -233,10 +292,11 @@ export default function GPSLab() {
             maxWidth: '60ch',
           }}
         >
-          {TOTAL_VESTS} GPS vests, {athletes.length} athletes.
-          Distance covered, top speed and performance data
-          captured during matches and made visible to scouts
-          and coaches as the program grows.
+          {TOTAL_VESTS} GPS vests,{' '}
+          {athletes.length} athletes.
+          Explore match-by-match GPS performance
+          and combined tracking statistics for
+          scouts and coaches.
         </p>
 
         <div className="gps-hero-stats">
@@ -259,7 +319,9 @@ export default function GPSLab() {
         <span className="gps-countdown">
           <i
             className={
-              hasStarted ? 'dot live' : 'dot'
+              hasStarted
+                ? 'dot live'
+                : 'dot'
             }
           />
           {countdown}
@@ -283,15 +345,24 @@ export default function GPSLab() {
             key={a.slug}
             type="button"
             role="tab"
-            aria-selected={a.slug === athlete?.slug}
+            aria-selected={
+              a.slug === athlete?.slug
+            }
             className={
               'gps-pick' +
-              (a.slug === athlete?.slug ? ' active' : '')
+              (a.slug === athlete?.slug
+                ? ' active'
+                : '')
             }
-            onClick={() => setSlug(a.slug)}
+            onClick={() =>
+              setSlug(a.slug)
+            }
           >
             <span className="gps-pick-photo">
-              <FallbackImage src={a.photo} alt="" />
+              <FallbackImage
+                src={a.photo}
+                alt=""
+              />
             </span>
 
             <span className="gps-pick-text">
@@ -328,16 +399,23 @@ export default function GPSLab() {
               <div className="gps-banner-meta">
                 <span>{athlete.club}</span>
                 <span>{athlete.position}</span>
-                <span>#{athlete.number}</span>
+                <span>
+                  #{athlete.number}
+                </span>
               </div>
 
               <div className="gps-banner-actions">
                 <span className="gps-vest-pill">
-                  Vest {VEST_ASSIGNMENTS[athlete.slug]}
+                  Vest{' '}
+                  {VEST_ASSIGNMENTS[
+                    athlete.slug
+                  ]}
                 </span>
 
                 <Link
-                  to={`/athletes/${athlete.slug}`}
+                  to={`/athletes/${
+                    athlete.slug
+                  }`}
                   className="gps-outline-btn"
                 >
                   Full profile →
@@ -356,97 +434,90 @@ export default function GPSLab() {
           {/* ---------- MATCH SELECTOR ---------- */}
           <div
             style={{
-              margin: '28px 0 24px',
-              padding: '22px',
-              background: 'var(--surface, #0c2940)',
-              border: '1px solid rgba(255,255,255,0.12)',
+              margin: '28px 0 22px',
+              padding: '20px',
               borderRadius: '12px',
+              background:
+                'var(--surface, #0c2940)',
+              border:
+                '1px solid rgba(255,255,255,0.12)',
             }}
           >
-            <div
+            <h3
               style={{
-                fontSize: '0.72rem',
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: 'var(--text-dim)',
-                marginBottom: '12px',
+                margin: '0 0 5px',
+                fontSize: '1.15rem',
               }}
             >
-              Select match or season summary
-            </div>
+              Performance statistics
+            </h3>
+
+            <p
+              style={{
+                color: 'var(--text-dim)',
+                fontSize: '0.84rem',
+                margin: '0 0 16px',
+              }}
+            >
+              Choose a match to view its GPS
+              statistics, or select All Matches
+              for combined performance.
+            </p>
 
             <div
+              role="group"
+              aria-label="Choose match statistics"
               style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: '10px',
+                gap: '9px',
               }}
             >
-              {GPS_SESSIONS
-                .filter(s => s.status === 'completed')
-                .map(session => {
+              {/* All Matches appears first */}
+              <button
+                type="button"
+                onClick={() =>
+                  setSelectedMatch('all')
+                }
+                aria-pressed={isAllMatches}
+                style={matchButtonStyle(
+                  isAllMatches
+                )}
+              >
+                All Matches
+              </button>
+
+              {completedSessions.map(
+                session => {
                   const active =
-                    selectedMatch === session.date;
+                    selectedMatch ===
+                    session.date;
 
                   return (
                     <button
                       key={session.date}
                       type="button"
                       onClick={() =>
-                        setSelectedMatch(session.date)
+                        setSelectedMatch(
+                          session.date
+                        )
                       }
                       aria-pressed={active}
-                      style={{
-                        cursor: 'pointer',
-                        padding: '11px 16px',
-                        borderRadius: '7px',
-                        border: active
-                          ? '1px solid #00d5c5'
-                          : '1px solid rgba(255,255,255,0.2)',
-                        background: active
-                          ? '#00d5c5'
-                          : 'transparent',
-                        color: active
-                          ? '#001a22'
-                          : '#ffffff',
-                        fontWeight: 700,
-                        fontSize: '0.85rem',
-                      }}
+                      style={matchButtonStyle(
+                        active
+                      )}
                     >
-                      {prettyDate(session.date, {
-                        day: 'numeric',
-                        month: 'short',
-                      })}
-                      {' · '}
-                      {session.title
-                        .replace(/^Session \d+ — /, '')}
+                      {prettyDate(
+                        session.date,
+                        {
+                          day: 'numeric',
+                          month: 'short',
+                        }
+                      )}
                     </button>
                   );
-                })}
-
-              <button
-                type="button"
-                onClick={() => setSelectedMatch('all')}
-                aria-pressed={isAllMatches}
-                style={{
-                  cursor: 'pointer',
-                  padding: '11px 16px',
-                  borderRadius: '7px',
-                  border: isAllMatches
-                    ? '1px solid #00d5c5'
-                    : '1px solid rgba(255,255,255,0.2)',
-                  background: isAllMatches
-                    ? '#00d5c5'
-                    : 'transparent',
-                  color: isAllMatches
-                    ? '#001a22'
-                    : '#ffffff',
-                  fontWeight: 700,
-                  fontSize: '0.85rem',
-                }}
-              >
-                All Matches
-              </button>
+                }
+              )}
             </div>
 
             <p
@@ -457,101 +528,102 @@ export default function GPSLab() {
               }}
             >
               {isAllMatches
-                ? 'Combined performance across all recorded matches. Distances and workloads are summed; top speed and peak acceleration show the best recorded values.'
+                ? `Combined performance across ${
+                    athleteSessions.length
+                  } recorded match${
+                    athleteSessions.length === 1
+                      ? ''
+                      : 'es'
+                  }. Distance and Player Load are summed; top speed and peak acceleration show the best recorded values.`
                 : activeSession?.detail}
             </p>
           </div>
 
           {/* ---------- STATISTICS ---------- */}
           <div className="gps-stats">
-            <div>
+            <div
+              style={{
+                width: '100%',
+                minWidth: 0,
+              }}
+            >
               <h3 className="gps-stats-title">
                 {statsTitle}
               </h3>
 
               {!hasData && (
                 <p className="gps-note">
-                  Performance data will appear here after
-                  the athlete's first recorded GPS session.
+                  Performance data will appear
+                  here after the athlete's first
+                  recorded GPS session.
                 </p>
               )}
 
               <div className="gps-metric-grid">
-                {GPS_METRICS.map(metric => (
-                  <div
-                    className="gps-metric"
-                    key={metric.key}
-                  >
-                    <span>
-                      {isAllMatches
-                        ? seasonLabel(metric)
-                        : metric.label}
-                    </span>
+                {GPS_METRICS.map(metric => {
+                  const value =
+                    displayedStats[
+                      metric.key
+                    ];
 
-                    <b
-                      className={
-                        hasData ? '' : 'muted'
-                      }
+                  return (
+                    <div
+                      className="gps-metric"
+                      key={metric.key}
                     >
-                      {fmt(
-                        displayedStats[metric.key],
-                        metric.unit
-                      )}
-                    </b>
-                  </div>
-                ))}
+                      <span>
+                        {isAllMatches
+                          ? summaryLabel(
+                              metric
+                            )
+                          : metric.label}
+                      </span>
+
+                      <b
+                        className={
+                          value === null ||
+                          value === undefined
+                            ? 'muted'
+                            : ''
+                        }
+                      >
+                        {fmt(
+                          value,
+                          metric.unit
+                        )}
+                      </b>
+                    </div>
+                  );
+                })}
               </div>
 
               <p
                 style={{
                   fontSize: '0.76rem',
-                  color: 'var(--text-dim)',
+                  color:
+                    'var(--text-dim)',
                   marginTop: '14px',
+                  lineHeight: 1.6,
                 }}
               >
-                — indicates a measurement that has not
-                been verified for the selected period.
-                Acceleration and deceleration counts use
-                Titan's configured zones.
+                — means a measurement has not
+                been verified for the selected
+                period. Combined totals are
+                shown only when every recorded
+                match has that measurement.
+                Acceleration and deceleration
+                counts use the tracking system's
+                configured zones.
               </p>
-            </div>
-
-            {/* ---------- SEASON SUMMARY ---------- */}
-            <div className="gps-season">
-              <h3 className="gps-stats-title">
-                2026 season
-              </h3>
-
-              <div className="gps-season-row">
-                <span>Sessions tracked</span>
-                <b>{stats.sessions}</b>
-              </div>
-
-              {GPS_METRICS
-                .filter(m => m.key !== 'duration_min')
-                .map(metric => (
-                  <div
-                    className="gps-season-row"
-                    key={metric.key}
-                  >
-                    <span>{seasonLabel(metric)}</span>
-
-                    <b className={hasData ? '' : 'muted'}>
-                      {fmt(
-                        combinedStats(athlete.slug)[
-                          metric.key
-                        ],
-                        metric.unit
-                      )}
-                    </b>
-                  </div>
-                ))}
             </div>
           </div>
         </>
       )}
 
-      <div className="gps-stripe" aria-hidden="true" />
+      <div
+        className="gps-stripe"
+        aria-hidden="true"
+      />
 
       {/* ---------- MATCH HISTORY ---------- */}
       <div className="section-head">
@@ -562,93 +634,121 @@ export default function GPSLab() {
 
       <div>
         {GPS_SESSIONS.length ? (
-          GPS_SESSIONS.map((session, index) => {
-            const d = daysUntil(session.date);
+          GPS_SESSIONS.map(
+            (session, index) => {
+              const d = daysUntil(
+                session.date
+              );
 
-            const label =
-              session.status === 'completed'
-                ? 'Completed'
-                : d === 0
-                  ? 'Today'
-                  : d === 1
-                    ? 'Tomorrow'
-                    : d > 1
-                      ? 'Upcoming'
-                      : 'Awaiting data';
+              const label =
+                session.status ===
+                'completed'
+                  ? 'Completed'
+                  : d === 0
+                    ? 'Today'
+                    : d === 1
+                      ? 'Tomorrow'
+                      : d > 1
+                        ? 'Upcoming'
+                        : 'Awaiting data';
 
-            const active =
-              selectedMatch === session.date;
+              const active =
+                selectedMatch ===
+                session.date;
 
-            return (
-              <button
-                key={session.date || index}
-                type="button"
-                onClick={() => {
-                  if (session.status === 'completed') {
-                    setSelectedMatch(session.date);
-
-                    document
-                      .querySelector('.gps-stats')
-                      ?.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start',
-                      });
+              return (
+                <button
+                  key={
+                    session.date ||
+                    index
                   }
-                }}
-                disabled={
-                  session.status !== 'completed'
-                }
-                className="panel gps-session"
-                style={{
-                  width: '100%',
-                  textAlign: 'left',
-                  cursor:
-                    session.status === 'completed'
-                      ? 'pointer'
-                      : 'default',
-                  border: active
-                    ? '1px solid #00d5c5'
-                    : undefined,
-                  color: 'inherit',
-                  fontFamily: 'inherit',
-                }}
-              >
-                <div className="gps-session-date">
-                  <b>
-                    {prettyDate(session.date, {
-                      day: 'numeric',
-                    })}
-                  </b>
+                  type="button"
+                  onClick={() => {
+                    if (
+                      session.status ===
+                      'completed'
+                    ) {
+                      setSelectedMatch(
+                        session.date
+                      );
 
-                  <span>
-                    {prettyDate(session.date, {
-                      month: 'short',
-                    })}
-                  </span>
-                </div>
-
-                <div
+                      document
+                        .querySelector(
+                          '.gps-stats'
+                        )
+                        ?.scrollIntoView({
+                          behavior:
+                            'smooth',
+                          block: 'start',
+                        });
+                    }
+                  }}
+                  disabled={
+                    session.status !==
+                    'completed'
+                  }
+                  className="panel gps-session"
                   style={{
-                    flex: 1,
-                    minWidth: 200,
+                    width: '100%',
+                    textAlign: 'left',
+                    cursor:
+                      session.status ===
+                      'completed'
+                        ? 'pointer'
+                        : 'default',
+                    border: active
+                      ? '1px solid #00d5c5'
+                      : undefined,
+                    color: 'inherit',
+                    fontFamily:
+                      'inherit',
                   }}
                 >
-                  <div style={{ fontWeight: 600 }}>
-                    {session.title}
+                  <div className="gps-session-date">
+                    <b>
+                      {prettyDate(
+                        session.date,
+                        { day: 'numeric' }
+                      )}
+                    </b>
+
+                    <span>
+                      {prettyDate(
+                        session.date,
+                        { month: 'short' }
+                      )}
+                    </span>
                   </div>
 
-                  <div className="gps-session-sub">
-                    {prettyDate(session.date)} ·{' '}
-                    {session.detail}
-                  </div>
-                </div>
+                  <div
+                    style={{
+                      flex: 1,
+                      minWidth: 200,
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontWeight: 600,
+                      }}
+                    >
+                      {session.title}
+                    </div>
 
-                <span className="status-chip">
-                  {label}
-                </span>
-              </button>
-            );
-          })
+                    <div className="gps-session-sub">
+                      {prettyDate(
+                        session.date
+                      )}{' '}
+                      · {session.detail}
+                    </div>
+                  </div>
+
+                  <span className="status-chip">
+                    {label}
+                  </span>
+                </button>
+              );
+            }
+          )
         ) : (
           <div className="empty-state">
             No sessions recorded yet.
