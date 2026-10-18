@@ -1,4 +1,3 @@
-
 export const NEWS_POSTS = [
   {
     id: 1,
@@ -64,19 +63,3 @@ export const NEWS_POSTS = [
     ]
   }
 ];
-
-  {
-    id: 4,
-    category: 'Club News',
-    date: 'Oct 2026',
-    title: 'Your headline here',
-    excerpt: 'One or two sentences that appear on the card.',
-    content: [
-      'First paragraph of the story.',
-
-      'Second paragraph.',
-
-      'Add as many paragraphs as you need.'
-    ]
-  },
-
