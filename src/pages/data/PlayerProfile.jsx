@@ -7,6 +7,7 @@ export default function PlayerProfile() {
   const { id } = useParams();
   const { store, teamById, playerById } = useGameOnData();
   const [gps, setGps] = useState(null);
+  const [matches, setMatches] = useState([]);
 
   const player = playerById(id);
 
@@ -14,10 +15,14 @@ export default function PlayerProfile() {
     let cancelled = false;
 
     setGps(null);
+    setMatches([]);
 
     api(`/api/player/${id}`)
       .then(d => {
-        if (!cancelled) setGps(d.gps);
+        if (!cancelled) {
+          setGps(d.gps);
+          setMatches(d.recent_matches || []);
+        }
       })
       .catch(() => {});
 
@@ -83,6 +88,50 @@ export default function PlayerProfile() {
         >
           Compare this player →
         </Link>
+      </div>
+
+      {/* ---------- RECENT MATCHES ---------- */}
+      <div className="panel" style={{ marginBottom: 20 }}>
+        <h3>Recent matches</h3>
+
+        {matches.length > 0 ? (
+          matches.map((m, i) => {
+            const isHome = team ? m.home_team === team.name : true;
+            const opponent = isHome ? m.away_team : m.home_team;
+            const homeScore = m.home_score ?? '–';
+            const awayScore = m.away_score ?? '–';
+            const result =
+              m.home_score == null || m.away_score == null
+                ? null
+                : isHome
+                ? (m.home_score > m.away_score ? 'W' : m.home_score < m.away_score ? 'L' : 'D')
+                : (m.away_score > m.home_score ? 'W' : m.away_score < m.home_score ? 'L' : 'D');
+
+            const contrib = [];
+            if (m.goals) contrib.push(`⚽ ${m.goals}`);
+            if (m.assists) contrib.push(`🅰️ ${m.assists}`);
+
+            return (
+              <div className="match-row" key={`${m.date}-${m.home_team}-${m.away_team}-${i}`}>
+                <div className="match-row-result" data-result={result || 'D'}>
+                  {result || '–'}
+                </div>
+                <div className="match-row-info">
+                  <div className="match-row-opponent">
+                    {isHome ? 'vs' : '@'} {opponent}
+                  </div>
+                  <div className="match-row-date">{m.date}</div>
+                </div>
+                <div className="match-row-score">{homeScore}-{awayScore}</div>
+                <div className="match-row-contrib">
+                  {contrib.length ? contrib.join('  ') : '—'}
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div className="pending-note">No match history recorded yet for this player.</div>
+        )}
       </div>
 
       {/* ---------- GPS PERFORMANCE ---------- */}
