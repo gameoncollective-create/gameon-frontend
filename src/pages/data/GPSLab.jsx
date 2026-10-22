@@ -93,6 +93,10 @@ function summaryLabel(metric) {
     return 'Player Load (total)';
   }
 
+  if (metric.key === 'm_per_min') {
+    return 'Distance per minute (average)';
+  }
+
   return `${metric.label} (total)`;
 }
 
@@ -157,6 +161,13 @@ function combinedStats(slug) {
       result[metric.key] = null;
     }
   });
+
+  // Average distance per minute across all matches.
+  if (result.distance_km !== null && result.duration_min) {
+    result.m_per_min = Math.round(
+      (result.distance_km * 1000) / result.duration_min
+    );
+  }
 
   return result;
 }
@@ -757,3 +768,4 @@ export default function GPSLab() {
     </>
   );
 }
+
