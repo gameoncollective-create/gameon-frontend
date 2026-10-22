@@ -30,6 +30,7 @@ export const GPS_SESSIONS = [
 
 export const GPS_METRICS = [
   { key: 'distance_km', label: 'Total distance', unit: 'km' },
+  { key: 'm_per_min', label: 'Distance per minute', unit: 'm/min' },
   { key: 'max_speed_kmh', label: 'Max speed', unit: 'km/h' },
   { key: 'peak_accel_ms2', label: 'Peak acceleration', unit: 'm/s²' },
   { key: 'hsr_m', label: 'High-speed running', unit: 'm' },
@@ -37,11 +38,12 @@ export const GPS_METRICS = [
   { key: 'accelerations', label: 'Accelerations', unit: '' },
   { key: 'decelerations', label: 'Decelerations', unit: '' },
   { key: 'workload', label: 'Player Load', unit: 'AU' },
-  { key: 'duration_min', label: 'Session duration', unit: 'min' },
+  { key: 'duration_min', label: 'Minutes played', unit: 'min' },
 ];
 
 const empty = () => ({
   distance_km: null,
+  m_per_min: null,
   max_speed_kmh: null,
   peak_accel_ms2: null,
   hsr_m: null,
@@ -63,27 +65,33 @@ export const GPS_SESSION_STATS = {
       distance_km: 11.38,
       max_speed_kmh: 28.49,
       peak_accel_ms2: 5.0,
+      sprints: 43,
       accelerations: 254,
       decelerations: 217,
       workload: 186.63,
+      duration_min: 90,
     },
     'veronicah-nyambura': {
       ...empty(),
       distance_km: 13.48,
       max_speed_kmh: 27.51,
       peak_accel_ms2: 5.1,
+      sprints: 63,
       accelerations: 291,
       decelerations: 265,
       workload: 286.49,
+      duration_min: 90,
     },
     'iddah-adhiambo': {
       ...empty(),
       distance_km: 10.38,
       max_speed_kmh: 29.60,
       peak_accel_ms2: 5.7,
+      sprints: 40,
       accelerations: 220,
       decelerations: 188,
       workload: 207.31,
+      duration_min: 70,
     },
   },
 
@@ -111,6 +119,18 @@ export const GPS_SESSION_STATS = {
     },
   },
 };
+
+// Distance per minute is calculated automatically
+// from distance and minutes played. Do not type it in.
+Object.values(GPS_SESSION_STATS).forEach((match) => {
+  Object.values(match).forEach((record) => {
+    const { distance_km: km, duration_min: mins } = record;
+    record.m_per_min =
+      typeof km === 'number' && typeof mins === 'number' && mins > 0
+        ? Math.round((km * 1000) / mins)
+        : null;
+  });
+});
 
 // Build the latest-session and season summaries
 // from the individual match records.
