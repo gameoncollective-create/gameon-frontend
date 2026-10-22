@@ -1,76 +1,48 @@
-import { Link, useParams } from 'react-router-dom';
-import { ATHLETES } from '../athletesData.js';
-import FallbackImage from '../components/FallbackImage.jsx';
+import { useState } from 'react';
+import { useGameOnData } from '../../DataContext.jsx';
+import PlayerCard from '../../components/PlayerCard.jsx';
 
-export default function AthleteProfile() {
-  const { slug } = useParams();
-  const athlete = ATHLETES.find(a => a.slug === slug);
+const POSITIONS = [
+  { key: 'all', label: 'All positions' },
+  { key: 'goalkeeper', label: 'Goalkeepers' },
+  { key: 'defender', label: 'Defenders' },
+  { key: 'midfielder', label: 'Midfielders' },
+  { key: 'forward', label: 'Forwards' }
+];
 
-  if (!athlete) {
-    return (
-      <section style={{ paddingBottom: 96 }}>
-        <div className="empty-state">Athlete not found.</div>
-      </section>
-    );
-  }
+export default function Players() {
+  const { store } = useGameOnData();
+  const [activePos, setActivePos] = useState('all');
+  const [q, setQ] = useState('');
+
+  const filtered = store.players.filter(p => {
+    const posOk = activePos === 'all' || (p.position || '').toLowerCase().includes(activePos);
+    const qOk = !q.trim() || p.name.toLowerCase().includes(q.trim().toLowerCase());
+    return posOk && qOk;
+  });
 
   return (
-    <section style={{ paddingBottom: 110 }}>
-      <div className="container">
-        <Link className="back-link" to="/services">← Back to athletes</Link>
-        <div className="athlete-profile">
-          <div>
-            <div className="athlete-profile-name">{athlete.name}</div>
-            <div className="athlete-profile-number">{athlete.number}</div>
-            <p className="athlete-profile-bio">{athlete.bio}</p>
-            <div className="athlete-meta-row">
-              <div className="meta-item">
-                <div className="meta-label">Club</div>
-                <div className="meta-value">{athlete.club}</div>
-              </div>
-              <div className="meta-item">
-                <div className="meta-label">Position</div>
-                <div className="meta-value">{athlete.position}</div>
-              </div>
-            </div>
-            <div className="athlete-meta-row">
-              {athlete.age && (
-                <div className="meta-item">
-                  <div className="meta-label">Age</div>
-                  <div className="meta-value">{athlete.age}</div>
-                </div>
-              )}
-              {athlete.foot && (
-                <div className="meta-item">
-                  <div className="meta-label">Preferred Foot</div>
-                  <div className="meta-value">{athlete.foot}</div>
-                </div>
-              )}
-              {athlete.height && (
-                <div className="meta-item">
-                  <div className="meta-label">Height</div>
-                  <div className="meta-value">{athlete.height}</div>
-                </div>
-              )}
-            </div>
-            <div className="athlete-follow">
-              <div className="follow-label">Follow</div>
-              <div className="follow-links">
-                <span>Instagram — coming soon</span>
-              </div>
-            </div>
-          </div>
-          <div className="athlete-profile-photo">
-            {athlete.photo && (
-              <FallbackImage
-                src={athlete.photo}
-                alt={athlete.name}
-                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-            )}
-          </div>
-        </div>
+    <>
+      <div className="tabs">
+        {POSITIONS.map(pos => (
+          <button key={pos.key} className={activePos === pos.key ? 'active' : ''} onClick={() => setActivePos(pos.key)}>
+            {pos.label}
+          </button>
+        ))}
       </div>
-    </section>
+      <div style={{ display: 'flex', gap: 10, background: 'var(--bg-raised)', border: '1px solid var(--line)', borderRadius: 8, padding: 6, maxWidth: 420, marginBottom: 28 }}>
+        <input
+          placeholder="Filter by name…"
+          value={q}
+          onChange={e => setQ(e.target.value)}
+          style={{ flex: 1, border: 'none', outline: 'none', padding: '9px 10px', background: 'none', color: 'var(--text)' }}
+        />
+      </div>
+      <div className="grid cols-4">
+        {filtered.length
+          ? filtered.map(p => <PlayerCard key={p.id} player={p} />)
+          : <div className="empty-state">No players match that search.</div>}
+      </div>
+    </>
   );
 }
