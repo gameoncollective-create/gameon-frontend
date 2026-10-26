@@ -26,6 +26,11 @@ export default function Footer() {
             <Link to="/data/players">Player directory</Link>
             <Link to="/data/standings">League standings</Link>
           </div>
+          <div>
+            <h4>Legal</h4>
+            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/terms">Terms of Service</Link>
+          </div>
         </div>
       </div>
       <p className="fine">GAMEON COLLECTIVE — KENYA WOMEN'S FOOTBALL INTELLIGENCE · DATA UPDATES AS NEW MATCHES ARE RECORDED</p>

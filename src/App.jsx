@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { DataProvider } from './DataContext.jsx';
 import Nav from './components/Nav.jsx';
 import Footer from './components/Footer.jsx';
+import CookieConsent from './components/CookieConsent.jsx';
 
 import Home from './pages/Home.jsx';
 import Services from './pages/Services.jsx';
@@ -10,6 +11,9 @@ import News from './pages/News.jsx';
 import Events from './pages/Events.jsx';
 import Contact from './pages/Contact.jsx';
 import AthleteProfile from './pages/AthleteProfile.jsx';
+import NotFound from './pages/NotFound.jsx';
+import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
+import Terms from './pages/Terms.jsx';
 
 import DataHubLayout from './pages/data/DataHubLayout.jsx';
 import Overview from './pages/data/Overview.jsx';
@@ -40,6 +44,8 @@ export default function App() {
           <Route path="/news" element={<News />} />
           <Route path="/events" element={<Events />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<Terms />} />
 
           <Route path="/data" element={<DataHubLayout />}>
             <Route index element={<Overview />} />
@@ -52,10 +58,11 @@ export default function App() {
             <Route path="gps" element={<GPSLab />} />
           </Route>
 
-          <Route path="*" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
+      <CookieConsent />
     </DataProvider>
   );
 }
