@@ -1,4 +1,3 @@
-
 // GameOn Collective — GPS Lab data
 // Tracking started Sunday 27 September 2026.
 // Only verified performance values are entered.
@@ -24,6 +23,12 @@ export const GPS_SESSIONS = [
     title: 'Session 02 — Mathare United Women vs Kayole Starlets',
     date: '2026-10-04',
     detail: 'Mathare United Women FC 1–1 Kayole Starlets FC · 3 athletes · 3 vests',
+    status: 'completed',
+  },
+  {
+    title: 'Session 03 — Police Bullets vs Mathare United Women',
+    date: '2026-10-24',
+    detail: 'Police Bullets 4–0 Mathare United Women FC · 2 athletes tracked',
     status: 'completed',
   },
 ];
@@ -118,6 +123,29 @@ export const GPS_SESSION_STATS = {
       workload: 107.96,
     },
   },
+
+  // Marline Atieno was not tracked in this match.
+  // Decelerations and minutes played not yet confirmed.
+  '2026-10-24': {
+    'veronicah-nyambura': {
+      ...empty(),
+      distance_km: 10.39,
+      max_speed_kmh: 28.57,
+      peak_accel_ms2: 5.9,
+      sprints: 66,
+      accelerations: 179,
+      workload: 286.0,
+    },
+    'iddah-adhiambo': {
+      ...empty(),
+      distance_km: 7.9,
+      max_speed_kmh: 28.75,
+      peak_accel_ms2: 4.9,
+      sprints: 35,
+      accelerations: 98,
+      workload: 172.73,
+    },
+  },
 };
 
 // Distance per minute is calculated automatically
@@ -135,8 +163,12 @@ Object.values(GPS_SESSION_STATS).forEach((match) => {
 // Build the latest-session and season summaries
 // from the individual match records.
 
-const latestDate = '2026-10-04';
 const sessionDates = Object.keys(GPS_SESSION_STATS).sort();
+
+// Each athlete's latest session is the most recent match she was
+// tracked in, so a missed match doesn't blank out her card.
+const latestDateFor = (slug) =>
+  [...sessionDates].reverse().find((date) => GPS_SESSION_STATS[date][slug]);
 
 const athleteSlugs = Object.keys(VEST_ASSIGNMENTS);
 
@@ -174,7 +206,7 @@ export const GPS_STATS = Object.fromEntries(
 
         latest: {
           ...empty(),
-          ...GPS_SESSION_STATS[latestDate][slug],
+          ...(GPS_SESSION_STATS[latestDateFor(slug)]?.[slug] || {}),
         },
 
         season: {
