@@ -125,7 +125,7 @@ export const GPS_SESSION_STATS = {
   },
 
   // Marline Atieno was not tracked in this match.
-  // Decelerations and minutes played not yet confirmed.
+  // High-speed running not yet confirmed.
   '2026-10-24': {
     'veronicah-nyambura': {
       ...empty(),
@@ -134,7 +134,9 @@ export const GPS_SESSION_STATS = {
       peak_accel_ms2: 5.9,
       sprints: 66,
       accelerations: 179,
+      decelerations: 143,
       workload: 286.0,
+      duration_min: 90,
     },
     'iddah-adhiambo': {
       ...empty(),
@@ -143,7 +145,9 @@ export const GPS_SESSION_STATS = {
       peak_accel_ms2: 4.9,
       sprints: 35,
       accelerations: 98,
+      decelerations: 93,
       workload: 172.73,
+      duration_min: 90,
     },
   },
 };
