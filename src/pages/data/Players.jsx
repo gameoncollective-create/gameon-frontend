@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { trackEvent } from '../../analytics.js';
 import { useGameOnData } from '../../DataContext.jsx';
 import PlayerCard from '../../components/PlayerCard.jsx';
 
@@ -14,6 +15,14 @@ export default function Players() {
   const { store } = useGameOnData();
   const [activePos, setActivePos] = useState('all');
   const [q, setQ] = useState('');
+
+  // Log what people search for, once they stop typing.
+  useEffect(() => {
+    const term = q.trim();
+    if (term.length < 2) return;
+    const t = setTimeout(() => trackEvent('search', { search_term: term, area: 'players' }), 1200);
+    return () => clearTimeout(t);
+  }, [q]);
 
   const filtered = store.players.filter(p => {
     const posOk = activePos === 'all' || (p.position || '').toLowerCase().includes(activePos);

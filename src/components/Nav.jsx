@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import Logo from './Logo.jsx';
+import { trackEvent } from '../analytics.js';
 
 const LINKS = [
   { to: '/', label: 'Home', end: true },
@@ -29,7 +30,7 @@ export default function Nav() {
             <NavLink key={l.to} to={l.to} end={l.end}>{l.label}</NavLink>
           ))}
         </nav>
-        <Link to="/contact" className="nav-cta">Partner with us</Link>
+        <Link to="/contact" className="nav-cta" onClick={() => trackEvent('partner_cta_click', { location: 'nav' })}>Partner with us</Link>
         <button className="burger" aria-label="Menu" onClick={() => setMobileOpen(o => !o)}>☰</button>
       </div>
       {mobileOpen && (

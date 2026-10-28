@@ -1,14 +1,56 @@
 import { useState } from 'react';
+import { trackEvent } from '../analytics.js';
+
+// Form submissions are delivered to our inbox by Web3Forms
+// (https://web3forms.com). The access key lives in the Vercel environment
+// variable VITE_WEB3FORMS_KEY. Without it, the form falls back to opening the
+// visitor's email app with their message filled in, so no message is lost.
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
+const CONTACT_EMAIL = 'nginda@gameoncollective.com';
 
 export default function Contact() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    // Not wired to a real backend yet — connect to POST /api/contact
-    // once that endpoint exists.
-    setSent(true);
-    e.target.reset();
+    const form = e.target;
+    const fields = Object.fromEntries(new FormData(form).entries());
+
+    if (fields.botcheck) return; // spam bot filled the hidden field
+
+    if (!WEB3FORMS_KEY) {
+      const body = `${fields.message}\n\n— ${fields.name} (${fields.role})\n${fields.email}`;
+      window.location.href =
+        `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Website enquiry — ' + fields.role)}` +
+        `&body=${encodeURIComponent(body)}`;
+      trackEvent('generate_lead', { method: 'mailto', role: fields.role });
+      return;
+    }
+
+    setStatus('sending');
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `New website enquiry — ${fields.role}`,
+          from_name: 'GameOn Collective website',
+          name: fields.name,
+          email: fields.email,
+          role: fields.role,
+          message: fields.message,
+        }),
+      });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message || 'Send failed');
+      setStatus('sent');
+      form.reset();
+      trackEvent('generate_lead', { method: 'contact_form', role: fields.role });
+    } catch (err) {
+      setStatus('error');
+      trackEvent('contact_form_error', { message: String(err.message || err).slice(0, 100) });
+    }
   }
 
   return (
@@ -18,7 +60,7 @@ export default function Contact() {
         <h1 style={{ fontSize: 'clamp(2.2rem,4.6vw,3.2rem)', margin: '16px 0 32px' }}>Let's talk.</h1>
         <div className="contact-grid">
           <div className="contact-info">
-            <div className="item"><div className="label">Email</div><div className="val">nginda@gameoncollective.com</div></div>
+            <div className="item"><div className="label">Email</div><div className="val"><a href={`mailto:${CONTACT_EMAIL}`} onClick={() => trackEvent('email_click', { location: 'contact_page' })}>{CONTACT_EMAIL}</a></div></div>
             <div className="item"><div className="label">Based in</div><div className="val">Nairobi, Kenya</div></div>
             <div className="item"><div className="label">For</div><div className="val">Clubs · Federations · Brand partners · Media</div></div>
             <div className="item">
@@ -50,13 +92,19 @@ export default function Contact() {
                 <label>Message</label>
                 <textarea required name="message" placeholder="Tell us a bit about what you're looking for…" />
               </div>
-              <button type="submit" className="btn btn-primary">Send message →</button>
-              {sent && (
-                <div className="form-success show">Thanks — your message has been noted. We'll get back to you soon.</div>
+              <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" style={{ display: 'none' }} aria-hidden="true" />
+              <button type="submit" className="btn btn-primary" disabled={status === 'sending'}>
+                {status === 'sending' ? 'Sending…' : 'Send message →'}
+              </button>
+              {status === 'sent' && (
+                <div className="form-success show">Thanks — your message has reached us. We'll get back to you soon.</div>
               )}
-              <p className="form-note">
-                This form isn't wired to a mail server yet — connect it to a <code>POST /api/contact</code> endpoint on the backend to receive submissions for real.
-              </p>
+              {status === 'error' && (
+                <div className="form-success show">
+                  Sorry, your message didn't go through. Please email us directly at{' '}
+                  <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+                </div>
+              )}
             </form>
           </div>
         </div>

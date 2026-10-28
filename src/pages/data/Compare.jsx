@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useGameOnData } from '../../DataContext.jsx';
 import { api } from '../../api.js';
+import { trackEvent } from '../../analytics.js';
 
 const STATS = [['Goals', 'goals'], ['Assists', 'assists'], ['Appearances', 'appearances'], ['Rating', 'rating']];
 
@@ -21,7 +22,10 @@ export default function Compare() {
     if (id1 === id2) return;
     setLoading(true);
     api(`/api/compare?player1=${id1}&player2=${id2}`)
-      .then(d => setData(d))
+      .then(d => {
+        setData(d);
+        trackEvent('compare_players', { player1: id1, player2: id2 });
+      })
       .catch(() => setError(true))
       .finally(() => setLoading(false));
   }, [id1, id2]);

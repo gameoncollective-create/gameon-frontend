@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { trackEvent } from '../../analytics.js';
 import { Link } from 'react-router-dom';
 import { ATHLETES } from '../../athletesData.js';
 import {
@@ -210,6 +211,21 @@ export default function GPSLab() {
   const athlete =
     athletes.find(a => a.slug === slug) ||
     athletes[0];
+
+  // Log which athlete and match visitors look at (skips the default view
+  // shown on page load, so only real clicks are counted).
+  const [gpsInteracted, setGpsInteracted] = useState(false);
+  useEffect(() => {
+    if (!gpsInteracted) {
+      setGpsInteracted(true);
+      return;
+    }
+    trackEvent('gps_view', {
+      athlete: athlete?.slug || '',
+      match: selectedMatch,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug, selectedMatch]);
 
   const completedSessions = GPS_SESSIONS
     .filter(

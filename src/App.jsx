@@ -4,6 +4,7 @@ import { DataProvider } from './DataContext.jsx';
 import Nav from './components/Nav.jsx';
 import Footer from './components/Footer.jsx';
 import CookieConsent from './components/CookieConsent.jsx';
+import RouteTracker from './components/RouteTracker.jsx';
 
 import Home from './pages/Home.jsx';
 import Services from './pages/Services.jsx';
@@ -35,6 +36,7 @@ export default function App() {
   return (
     <DataProvider>
       <ScrollToTop />
+      <RouteTracker />
       <Nav />
       <main>
         <Routes>
