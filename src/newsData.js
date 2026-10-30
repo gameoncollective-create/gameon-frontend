@@ -1,13 +1,40 @@
 export const NEWS_POSTS = [
   {
+    id: 4,
+    slug: 'gps-lab-session-03-police-bullets-vs-mathare-united-women',
+    isoDate: '2026-10-30',
+    category: 'GPS Lab',
+    date: 'Oct 2026',
+    title:
+      'GPS Lab Session 03: Police Bullets 4–0 Mathare United Women — What the Data Shows',
+    excerpt:
+      'Against unbeaten league leaders Police Bullets, Veronicah Nyambura covered 10.39 km and Iddah Adhiambo hit 28.75 km/h. Here are the GPS numbers from Saturday 24 October.',
+    featured: true,
+    content: [
+      'Mathare United Women FC lost 4–0 to Police Bullets on Saturday 24 October 2026 in the FKF Women’s Premier League. Police Bullets remain unbeaten at the top of the table. Two GameOn Collective athletes played the full 90 minutes wearing Titan GPS performance vests: right back Veronicah Nyambura and forward Iddah Adhiambo. Centre back Marline Atieno was not tracked because she is injured.',
+
+      'Veronicah Nyambura carried the heaviest physical load on the pitch. She covered 10.39 km (115 metres per minute), made 66 sprints, 179 accelerations and 143 decelerations, and reached a top speed of 28.57 km/h. Her peak acceleration of 5.9 m/s² is her best of the season, and her player load of 286 equals her season high.',
+
+      'Iddah Adhiambo was the fastest tracked player on the day, reaching 28.75 km/h. She covered 7.90 km, up from 5.18 km in her previous match against Kayole Starlets, with 35 sprints, 98 accelerations and 93 decelerations.',
+
+      'The scoreline was one-sided, but the data shows how much work went into it. Defending against the league leaders meant constant changes of direction: across the two tracked athletes, that added up to 277 accelerations and 236 decelerations in a single match.',
+
+      'This was the third match tracked by GameOn Collective’s GPS Lab since tracking began on 27 September 2026. Full match-by-match data for every tracked athlete is published in the GPS Lab on the GameOn Collective website.',
+
+      'Mathare United Women host Bungoma Queens next, on Saturday 31 October at Dandora Stadium (14:00 EAT).'
+    ]
+  },
+
+  {
     id: 1,
+    slug: 'introducing-gameon-collective',
+    isoDate: '2026-10',
     category: 'Platform Updates',
     date: 'Oct 2026',
     title:
       'Introducing GameOn Collective: Building a Digital Home for Kenyan Women’s Football',
     excerpt:
       'A growing platform bringing together weekly player statistics, digital profiles and emerging GPS performance insights.',
-    featured: true,
     content: [
       'GameOn Collective is developing a digital platform dedicated to improving the visibility and documentation of Kenyan women’s football.',
 
@@ -25,6 +52,8 @@ export const NEWS_POSTS = [
 
   {
     id: 2,
+    slug: 'behind-the-numbers-tracking-players-womens-premier-league',
+    isoDate: '2026-10',
     category: 'Football Data',
     date: 'Oct 2026',
     title:
@@ -44,6 +73,8 @@ export const NEWS_POSTS = [
 
   {
     id: 3,
+    slug: 'inside-gameon-gps-lab-first-steps',
+    isoDate: '2026-10',
     category: 'GPS Lab',
     date: 'Oct 2026',
     title:

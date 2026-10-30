@@ -27,6 +27,7 @@ import { fileURLToPath } from 'node:url';
 import { ATHLETES } from '../src/athletesData.js';
 import { GPS_SESSIONS, GPS_STATS } from '../src/gpsData.js';
 import { NEWS_POSTS } from '../src/newsData.js';
+import { upcomingEvents } from '../src/eventsData.js';
 
 const SITE = 'https://www.gameoncollective.com';
 const BRAND = 'GameOn Collective';
@@ -241,17 +242,42 @@ render({
     <h1>News &amp; updates</h1>
     ${(NEWS_POSTS || [])
       .map(
-        (n) => `<article><h2>${esc(n.title)}</h2><p><em>${esc(n.category || '')}${n.date ? ' · ' + esc(n.date) : ''}</em></p><p>${esc(n.excerpt || '')}</p>${(n.content || []).map((c) => `<p>${esc(c)}</p>`).join('')}</article>`,
+        (n) => `<article><h2>${link(`/news/${n.slug}`, n.title)}</h2><p><em>${esc(n.category || '')}${n.date ? ' · ' + esc(n.date) : ''}</em></p><p>${esc(n.excerpt || '')}</p></article>`,
       )
       .join('')}`,
 });
 
+const upcoming = upcomingEvents();
+const nextFixtures = upcoming.filter((e) => e.type === 'Match').slice(0, 3).map((e) => e.title).join(', ');
+
 render({
   route: '/events',
   title: `Events — Kenyan Women's Football Fixtures & Milestones | ${BRAND}`,
-  description:
-    'Kenyan women’s football fixtures, GameOn Collective events and milestones, including Kenya Women Premier League matches and GPS Lab sessions.',
-  body: `<h1>Events</h1><p>Matches, standings and milestones in Kenyan women's football.</p><p>${link('/data/standings', 'See the latest league standings')} · ${link('/data/gps', 'GPS Lab sessions')}</p>`,
+  description: nextFixtures
+    ? `Upcoming FKF Women's Premier League fixtures with venues and kick-off times: ${nextFixtures}.`
+    : 'Kenyan women’s football fixtures, GameOn Collective events and milestones, including Kenya Women Premier League matches and GPS Lab sessions.',
+  jsonld: upcoming
+    .filter((e) => e.type === 'Match' && e.date)
+    .map((e) => {
+      const [home, away] = e.title.split(' vs ');
+      const [venue, time] = String(e.location || '').split(' · ');
+      const hhmm = (time || '').match(/(\d{1,2}):(\d{2})/);
+      return {
+        '@context': 'https://schema.org',
+        '@type': 'SportsEvent',
+        name: e.title,
+        sport: 'Soccer',
+        startDate: hhmm ? `${e.date}T${hhmm[1].padStart(2, '0')}:${hhmm[2]}:00+03:00` : e.date,
+        eventStatus: 'https://schema.org/EventScheduled',
+        location: { '@type': 'Place', name: venue || 'Kenya', address: { '@type': 'PostalAddress', addressCountry: 'KE' } },
+        homeTeam: home ? { '@type': 'SportsTeam', name: home } : undefined,
+        awayTeam: away ? { '@type': 'SportsTeam', name: away } : undefined,
+        superEvent: { '@type': 'SportsEvent', name: "FKF Women's Premier League" },
+      };
+    }),
+  body: `<h1>Kenyan women's football fixtures &amp; events</h1>
+    ${upcoming.filter((e) => e.type === 'Match').length ? `<h2>Upcoming matches</h2>${list(upcoming.filter((e) => e.type === 'Match').map((e) => `<strong>${esc(e.title)}</strong> — ${esc(e.day)} ${esc(e.month)}, ${esc(e.location)} (${esc(e.status)})`))}` : '<p>No fixtures confirmed yet.</p>'}
+    <p>${link('/data/standings', 'See the latest league standings')} · ${link('/data/gps', 'GPS Lab sessions')}</p>`,
 });
 
 render({
@@ -283,6 +309,41 @@ render({
   description: 'Terms of service for using gameoncollective.com and GameOn Collective’s women’s football data platform.',
   body: `<h1>Terms of Service</h1><p>Terms for using gameoncollective.com.</p>`,
 });
+
+// ---------- news articles ----------
+
+for (const n of NEWS_POSTS || []) {
+  if (!n.slug) continue;
+  render({
+    route: `/news/${n.slug}`,
+    title: `${n.title} | ${BRAND}`,
+    description: n.excerpt || n.title,
+    type: 'article',
+    jsonld: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'NewsArticle',
+        headline: n.title,
+        description: n.excerpt,
+        datePublished: n.isoDate || undefined,
+        articleSection: n.category,
+        url: `${SITE}/news/${n.slug}`,
+        image: DEFAULT_IMAGE,
+        author: { '@id': `${SITE}/#organization` },
+        publisher: { '@id': `${SITE}/#organization` },
+        inLanguage: 'en-KE',
+      },
+    ],
+    body: `
+      <article>
+        <p><em>${esc(n.category || '')}${n.date ? ' · ' + esc(n.date) : ''}</em></p>
+        <h1>${esc(n.title)}</h1>
+        <p><strong>${esc(n.excerpt || '')}</strong></p>
+        ${(n.content || []).map((c) => `<p>${esc(c)}</p>`).join('')}
+      </article>
+      <p>${link('/news', 'More news')} · ${link('/data/gps', 'GPS Lab data')}</p>`,
+  });
+}
 
 // ---------- data hub ----------
 

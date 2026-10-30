@@ -44,6 +44,7 @@ export default function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/athletes/:slug" element={<AthleteProfile />} />
           <Route path="/news" element={<News />} />
+          <Route path="/news/:slug" element={<News />} />
           <Route path="/events" element={<Events />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />

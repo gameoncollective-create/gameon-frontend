@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { EVENTS } from '../eventsData.js';
+import { upcomingEvents } from '../eventsData.js';
 import { useGameOnData } from '../DataContext.jsx';
 import StandingsTable from '../components/StandingsTable.jsx';
 
@@ -19,8 +19,9 @@ function EventRow({ ev }) {
 
 export default function Events() {
   const { store } = useGameOnData();
-  const matches = EVENTS.filter(e => e.type === 'Match');
-  const otherEvents = EVENTS.filter(e => e.type !== 'Match');
+  const events = upcomingEvents();
+  const matches = events.filter(e => e.type === 'Match');
+  const otherEvents = events.filter(e => e.type !== 'Match');
 
   return (
     <section style={{ paddingBottom: 96 }}>

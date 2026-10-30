@@ -2,19 +2,27 @@
 // (other organizations' events we're surfacing), 'fixture' (real
 // league matches — the "what's on this weekend" category).
 //
-// FKF Women's Premier League Match Week One fixtures (below) are
-// REAL, from the official @fkfwpl / @football_kenya_federation
-// announcement. Venues/kickoff times weren't published by the
-// federation at time of posting — marked "Venue TBA" honestly
-// rather than guessed. Update once FKF confirms.
+// `date` (YYYY-MM-DD) controls when an event disappears: the Events page
+// only shows events from today onwards, so past fixtures drop off
+// automatically and the page never looks out of date.
+//
+// HOW TO ADD NEXT WEEK'S FIXTURES: copy a line, change the date, day,
+// month, teams, venue and time, and give it a new id.
+//
+// Matchweek 6 — FKF Women's Premier League, 31 Oct – 1 Nov 2026.
 export const EVENTS = [
-  { id: 1, month: 'SEP', day: '19', type: 'Match', source: 'fixture', title: 'Gideons Starlets FC vs Ulinzi Starlets', location: 'Venue TBA', status: 'Match Week One' },
-  { id: 2, month: 'SEP', day: '19', type: 'Match', source: 'fixture', title: 'Police Bullets FC vs Bungoma Queens FC', location: 'Venue TBA', status: 'Match Week One' },
-  { id: 3, month: 'SEP', day: '19', type: 'Match', source: 'fixture', title: 'Mathare United Women vs Vihiga Queens FC', location: 'Venue TBA', status: 'Match Week One' },
-  { id: 4, month: 'SEP', day: '20', type: 'Match', source: 'fixture', title: 'Elim White Ladies FC vs Zetech Sparks FC', location: 'Venue TBA', status: 'Match Week One' },
-  { id: 5, month: 'SEP', day: '20', type: 'Match', source: 'fixture', title: 'Trinity Starlets FC vs Kibera Soccer Women', location: 'Venue TBA', status: 'Match Week One' },
-  { id: 6, month: 'SEP', day: '20', type: 'Match', source: 'fixture', title: 'Kayole Starlet FC vs Shabana Starlets FC', location: 'Venue TBA', status: 'Match Week One' },
-  { id: 7, month: 'AUG', day: '26', type: 'Workshop', source: 'gameon', title: 'Athlete Branding Clinic', location: 'Nairobi', status: 'Registration open' },
-  { id: 8, month: 'JUN', day: '—', type: 'Milestone', source: 'gameon', title: 'GPS Lab — 3-vest pilot underway', location: 'Nairobi', status: 'In progress' },
-  { id: 9, month: 'AUG', day: '20', type: 'Community', source: 'community', title: "Football Kenya Federation Women's Forum", location: 'Nairobi', status: 'Open to public' }
+  { id: 101, date: '2026-10-31', month: 'OCT', day: '31', type: 'Match', source: 'fixture', title: 'Shabana Starlets vs Gideon Starlets', location: 'Green Stadium Awendo · 13:00 EAT', status: 'Matchweek 6' },
+  { id: 102, date: '2026-10-31', month: 'OCT', day: '31', type: 'Match', source: 'fixture', title: 'Mathare United Women vs Bungoma Queens', location: 'Dandora Stadium · 14:00 EAT', status: 'GameOn athletes playing' },
+  { id: 103, date: '2026-10-31', month: 'OCT', day: '31', type: 'Match', source: 'fixture', title: 'Police Bullets vs Ulinzi Starlets', location: 'Police Sacco Grounds · 14:00 EAT', status: 'Matchweek 6' },
+  { id: 104, date: '2026-10-31', month: 'OCT', day: '31', type: 'Match', source: 'fixture', title: 'Elim White Ladies vs Vihiga Queens', location: 'Ndura Sports Complex · 15:00 EAT', status: 'Matchweek 6' },
+  { id: 105, date: '2026-10-31', month: 'OCT', day: '31', type: 'Match', source: 'fixture', title: 'Trinity Starlets vs Zetech Sparks', location: 'Afraha Stadium · 15:00 EAT', status: 'Matchweek 6' },
+  { id: 106, date: '2026-11-01', month: 'NOV', day: '1', type: 'Match', source: 'fixture', title: 'Kayole Starlet vs Kibera Soccer Women', location: 'Vapor Grounds · 15:00 EAT', status: 'Matchweek 6' },
 ];
+
+// Events still to come (today or later), in date order.
+export function upcomingEvents(list = EVENTS, today = new Date()) {
+  const todayStr = today.toISOString().slice(0, 10);
+  return list
+    .filter(e => !e.date || e.date >= todayStr)
+    .sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+}

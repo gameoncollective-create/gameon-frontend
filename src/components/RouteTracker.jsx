@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useGameOnData } from '../DataContext.jsx';
 import { ATHLETES } from '../athletesData.js';
+import { NEWS_POSTS } from '../newsData.js';
 import { trackPageView } from '../analytics.js';
 
 const SITE = 'GameOn Collective';
@@ -38,7 +39,13 @@ function resolveTitle(pathname, { store, teamById, playerById }) {
     return { title: path === '/' || path === '/contact' ? t : `${t} | ${SITE}`, ready: true };
   }
 
-  let m = path.match(/^\/athletes\/([^/]+)$/);
+  let m = path.match(/^\/news\/([^/]+)$/);
+  if (m) {
+    const post = NEWS_POSTS.find(p => p.slug === m[1]);
+    return { title: post ? `${post.title} | ${SITE}` : `News | ${SITE}`, ready: true };
+  }
+
+  m = path.match(/^\/athletes\/([^/]+)$/);
   if (m) {
     const athlete = ATHLETES.find(a => a.slug === m[1]);
     if (!athlete) return { title: `Athlete | ${SITE}`, ready: true };

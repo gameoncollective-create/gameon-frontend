@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { NEWS_POSTS } from '../newsData.js';
 import { initials, tileClass } from '../api.js';
 
@@ -50,7 +51,12 @@ function PostCard({ post, onRead }) {
 
 export default function News() {
   const [activeCat, setActiveCat] = useState('All');
-  const [selectedPost, setSelectedPost] = useState(null);
+  // Each article has its own address (/news/<slug>) so it can be shared
+  // and found on Google; opening or closing an article changes the URL.
+  const { slug } = useParams();
+  const navigate = useNavigate();
+  const selectedPost = slug ? NEWS_POSTS.find(post => post.slug === slug) || null : null;
+  const setSelectedPost = post => navigate(post ? `/news/${post.slug}` : '/news');
 
   const featured =
     NEWS_POSTS.find(post => post.featured) || NEWS_POSTS[0];
