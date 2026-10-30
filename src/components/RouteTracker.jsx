@@ -5,22 +5,26 @@ import { ATHLETES } from '../athletesData.js';
 import { trackPageView } from '../analytics.js';
 
 const SITE = 'GameOn Collective';
-const DEFAULT_TITLE = "GameOn Collective — Kenya Women's Football Intelligence";
+// Keep these titles in sync with scripts/prerender.mjs (what search engines
+// see before JavaScript runs).
+const DEFAULT_TITLE = "GameOn Collective — Kenya Women's Football Data, Stats & GPS Tracking";
+const LEAGUES = { premier: "Kenya Women's Premier League", nsl: 'FKF Women National Super League' };
+const leagueName = (l) => LEAGUES[String(l || '').toLowerCase()] || l || "Kenyan women's football";
 
 const STATIC_TITLES = {
   '/': DEFAULT_TITLE,
-  '/services': 'Services',
-  '/news': 'News & Blog',
-  '/events': 'Events',
-  '/contact': 'Contact',
+  '/services': 'Services — Athlete Branding, GPS Tracking & Football Data',
+  '/news': "News — Kenya Women's Football & GameOn Updates",
+  '/events': "Events — Kenyan Women's Football Fixtures & Milestones",
+  '/contact': 'Contact — Partner with GameOn Collective',
   '/privacy': 'Privacy Policy',
   '/terms': 'Terms of Service',
-  '/data': 'Data Intelligence',
-  '/data/players': 'Player Directory',
-  '/data/teams': 'Teams',
-  '/data/standings': 'League Standings',
-  '/data/compare': 'Compare Players',
-  '/data/gps': 'GPS Lab',
+  '/data': "Data Intelligence — Kenya Women's Football Stats",
+  '/data/players': 'Player Directory — Kenyan Women Footballers',
+  '/data/teams': "Teams — Kenya Women's Premier League & NSL Clubs",
+  '/data/standings': "Kenya Women's Premier League Standings 2026-27",
+  '/data/compare': 'Compare Players Head-to-Head',
+  '/data/gps': "GPS Lab — Women's Football GPS Performance Data, Kenya",
 };
 
 // Returns { title, ready }. ready=false while a player/team name is still
@@ -31,26 +35,30 @@ function resolveTitle(pathname, { store, teamById, playerById }) {
 
   if (STATIC_TITLES[path]) {
     const t = STATIC_TITLES[path];
-    return { title: path === '/' ? t : `${t} | ${SITE}`, ready: true };
+    return { title: path === '/' || path === '/contact' ? t : `${t} | ${SITE}`, ready: true };
   }
 
   let m = path.match(/^\/athletes\/([^/]+)$/);
   if (m) {
     const athlete = ATHLETES.find(a => a.slug === m[1]);
-    return { title: `${athlete ? athlete.name : 'Athlete'} | ${SITE}`, ready: true };
+    if (!athlete) return { title: `Athlete | ${SITE}`, ready: true };
+    return { title: `${athlete.name} — ${athlete.position || 'Footballer'}, ${athlete.club} | ${SITE}`, ready: true };
   }
 
   m = path.match(/^\/data\/player\/([^/]+)$/);
   if (m) {
     const player = playerById(m[1]);
-    if (player) return { title: `${player.name} — Player Profile | ${SITE}`, ready: true };
+    if (player) {
+      const club = teamById(player.team_id)?.name || leagueName(player.league);
+      return { title: `${player.name} — ${player.position || 'Player'}, ${club} | Stats | ${SITE}`, ready: true };
+    }
     return { title: `Player Profile | ${SITE}`, ready: store.loaded };
   }
 
   m = path.match(/^\/data\/team\/([^/]+)$/);
   if (m) {
     const team = teamById(m[1]);
-    if (team) return { title: `${team.name} — Team Profile | ${SITE}`, ready: true };
+    if (team) return { title: `${team.name} — Squad, Stats & Standings | ${leagueName(team.league)} | ${SITE}`, ready: true };
     return { title: `Team Profile | ${SITE}`, ready: store.loaded };
   }
 
