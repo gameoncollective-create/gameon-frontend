@@ -471,12 +471,29 @@ for (const a of ATHLETES) {
         memberOf: { '@type': 'SportsTeam', name: a.club, sport: 'Soccer' },
         affiliation: { '@id': `${SITE}/#organization` },
         description: a.bio,
+        homeLocation: a.hometown ? { '@type': 'Place', name: a.hometown } : undefined,
+        height: a.height || undefined,
+        award: Array.isArray(a.achievements) && a.achievements.length ? a.achievements : undefined,
+        sameAs: [
+          a.instagram && `https://www.instagram.com/${a.instagram.replace(/^@/, '')}`,
+          a.tiktok && `https://www.tiktok.com/@${a.tiktok.replace(/^@/, '')}`,
+        ].filter(Boolean),
       },
     ],
     body: `
       <h1>${esc(a.name)}</h1>
       <p>${esc(a.position || '')} · ${esc(a.club)}${a.number ? ' · #' + esc(a.number) : ''}</p>
-      <p>${esc(a.bio || '')}</p>
+      ${list([
+        a.age && `Age: ${esc(a.age)}`,
+        a.foot && `Preferred foot: ${esc(a.foot)}`,
+        a.height && `Height: ${esc(a.height)}`,
+        a.hometown && `Hometown: ${esc(a.hometown)}`,
+      ].filter(Boolean))}
+      <h2>${esc(a.firstName || a.name)}'s story</h2>
+      ${(Array.isArray(a.story) && a.story.length ? a.story : [a.bio]).filter(Boolean).map((p) => `<p>${esc(p)}</p>`).join('')}
+      ${a.quote ? `<blockquote><p>“${esc(a.quote)}” — ${esc(a.name)}</p></blockquote>` : ''}
+      ${Array.isArray(a.achievements) && a.achievements.length ? `<h2>Achievements</h2>${list(a.achievements.map(esc))}` : ''}
+      ${a.goals ? `<h2>Goals</h2><p>${esc(a.goals)}</p>` : ''}
       ${s ? `<h2>GPS performance</h2><p>${esc(gpsLine)}</p><p>Latest match: ${fmt(latest.distance_km, 'km')} covered, top speed ${fmt(latest.max_speed_kmh, 'km/h')}, ${fmt(latest.sprints)} sprints.</p><p>${link('/data/gps', 'See full GPS Lab data')}</p>` : ''}`,
   });
 }

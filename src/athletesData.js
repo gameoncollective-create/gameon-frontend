@@ -1,8 +1,15 @@
-// The 3 flagship athletes on the brand-building program.
-// Names, bios and photos are placeholders while real athlete
-// profiles are finalized. Replace with real names, bios and
-// photos before announcing on gameoncollective.com.
-// Jersey number, birth year, and height are still TBD.
+// The 3 GameOn athletes. Each one has a profile page at /athletes/<slug>.
+//
+// HOW TO FILL IN A PROFILE: type the details between the quotes / brackets.
+// Anything left empty ('' or []) is simply hidden on the website.
+//   hometown:     'Kibera, Nairobi'
+//   height:       '1.68 m'
+//   story:        ['First paragraph...', 'Second paragraph...']
+//   quote:        'A short quote from her, without quotation marks'
+//   achievements: ['Achievement one', 'Achievement two']
+//   goals:        'What she is aiming for'
+//   instagram:    '@herhandle'      tiktok: '@herhandle'
+// Use a straight apostrophe inside text by typing \' (e.g. 'she\'s').
 export const ATHLETES = [
   {
     slug: 'marline-atieno',
@@ -15,6 +22,13 @@ export const ATHLETES = [
     foot: 'Right',
     age: '25',
     height: '',
+    hometown: '',
+    story: [],
+    quote: '',
+    achievements: [],
+    goals: '',
+    instagram: '',
+    tiktok: '',
     bio: "Marline Atieno is a right-footed center back for Mathare United Women FC and one of GameOn Collective's featured athletes."
   },
   {
@@ -28,6 +42,13 @@ export const ATHLETES = [
     foot: 'Right',
     age: '25',
     height: '',
+    hometown: '',
+    story: [],
+    quote: '',
+    achievements: [],
+    goals: '',
+    instagram: '',
+    tiktok: '',
     bio: "Veronicah Nyambura is a right-footed right back for Mathare United Women FC and one of GameOn Collective's featured athletes."
   },
   {
@@ -41,6 +62,13 @@ export const ATHLETES = [
     foot: 'Right',
     age: '28',
     height: '',
+    hometown: '',
+    story: [],
+    quote: '',
+    achievements: [],
+    goals: '',
+    instagram: '',
+    tiktok: '',
     bio: "Iddah Adhiambo is a right-footed forward for Mathare United Women FC and one of GameOn Collective's featured athletes."
   }
 ];

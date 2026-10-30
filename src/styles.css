@@ -1000,3 +1000,51 @@
 .gps-session-date span{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;color:var(--text-dim);}
 .gps-session-sub{font-family:var(--mono);font-size:.75rem;color:var(--text-dim);margin-top:4px;}
 
+
+/* ===== Athlete profile page (src/pages/AthleteProfile.jsx) ===== */
+.ap-banner{margin-bottom:28px;}
+.ap-banner .gps-banner-last{font-weight:400;}
+.ap-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:0 0 56px;}
+.ap-facts>div{padding:18px 22px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 -1px -1px 0;}
+.ap-facts dt{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:8px;}
+.ap-facts dd{font-family:var(--display);text-transform:uppercase;font-size:1.3rem;line-height:1.05;margin:0;}
+.ap-section{margin-bottom:64px;}
+.ap-h2{font-size:clamp(1.9rem,3.4vw,2.7rem);margin-top:10px;}
+.ap-h3{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:1.35rem;margin-bottom:14px;}
+.ap-p{color:var(--text-dim);font-size:1.02rem;line-height:1.75;max-width:62ch;margin-top:16px;}
+.ap-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:22px;}
+.ap-stat{background:var(--bg-raised);border:1px solid var(--line);border-radius:16px;padding:22px 22px 20px;}
+.ap-stat-label{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);}
+.ap-stat-value{font-family:var(--display);font-size:clamp(2.4rem,4vw,3.2rem);line-height:1;margin-top:12px;color:var(--amber);}
+.ap-stat-value small{font-family:var(--mono);font-size:.8rem;color:var(--text-dim);letter-spacing:.02em;}
+.ap-stat-note{font-size:.78rem;color:var(--text-dim);margin-top:10px;line-height:1.4;}
+.ap-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;}
+.ap-table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:520px;}
+.ap-table th{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);font-weight:400;text-align:left;padding:14px 20px;border-bottom:1px solid var(--line);}
+.ap-table td{padding:14px 20px;border-bottom:1px solid var(--line);white-space:nowrap;}
+.ap-table tr:last-child td{border-bottom:0;}
+.ap-table td:not(:first-child),.ap-table th:not(:first-child){text-align:right;font-family:var(--mono);}
+.ap-date{display:block;font-family:var(--mono);font-size:.7rem;color:var(--amber);text-transform:uppercase;margin-bottom:2px;}
+.ap-story{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:48px;align-items:start;}
+.ap-story:has(> div:only-child){grid-template-columns:1fr;}
+.ap-side{background:var(--bg-raised);border:1px solid var(--line);border-radius:16px;padding:26px;}
+.ap-side .ap-h3+.ap-p{margin-top:0;}
+.ap-list{list-style:none;margin:0 0 24px;}
+.ap-list li{padding:10px 0;border-bottom:1px solid var(--line);color:var(--text);font-size:.95rem;}
+.ap-list li:last-child{border-bottom:0;}
+.ap-quote{margin:32px 0 0;padding:4px 0 4px 24px;border-left:3px solid var(--violet);}
+.ap-quote p{font-family:var(--display);text-transform:uppercase;font-size:clamp(1.5rem,2.6vw,2rem);line-height:1.1;}
+.ap-quote cite{display:block;margin-top:12px;font-family:var(--mono);font-size:.72rem;font-style:normal;text-transform:uppercase;letter-spacing:.06em;color:var(--text-dim);}
+.ap-cta{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:30px 32px;border-radius:20px;background:var(--bg-raised);border:1px solid var(--line-2);}
+.ap-socials{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-family:var(--mono);font-size:.78rem;text-transform:uppercase;}
+.ap-socials a{color:var(--amber);border-bottom:1px solid var(--amber);padding-bottom:2px;}
+@media(max-width:900px){
+  .ap-stats{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .ap-story{grid-template-columns:1fr;gap:28px;}
+}
+@media(max-width:520px){
+  .ap-stats{gap:10px;}
+  .ap-stat{padding:16px;}
+  .ap-cta{padding:24px;}
+  .ap-cta .btn{width:100%;justify-content:center;}
+}
