@@ -1048,3 +1048,13 @@
   .ap-cta{padding:24px;}
   .ap-cta .btn{width:100%;justify-content:center;}
 }
+
+/* ===== Athlete cards with GPS headline numbers (src/components/AthleteCard.jsx) ===== */
+.athlete-card-photo::after{background:linear-gradient(to top, rgba(0,20,31,.92) 0%, rgba(0,20,31,.55) 38%, transparent 62%);}
+.athlete-card-info{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:18px;}
+.athlete-card-info .athlete-card-name{position:static;font-size:1.45rem;line-height:1;}
+.athlete-card-position{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.8);margin-top:6px;}
+.athlete-card-stats{display:flex;gap:18px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.18);}
+.athlete-card-stats b{display:block;font-family:var(--display);font-weight:400;font-size:1.6rem;line-height:1;color:var(--amber);}
+.athlete-card-stats span{display:block;font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.75);margin-top:4px;}
+.athlete-card-gps{position:absolute;top:14px;left:14px;z-index:2;font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;padding:6px 10px;border-radius:20px;background:#00141F;color:var(--amber);border:1px solid rgba(0,220,200,.35);}
