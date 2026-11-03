@@ -1058,3 +1058,9 @@
 .athlete-card-stats b{display:block;font-family:var(--display);font-weight:400;font-size:1.6rem;line-height:1;color:var(--amber);}
 .athlete-card-stats span{display:block;font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.75);margin-top:4px;}
 .athlete-card-gps{position:absolute;top:14px;left:14px;z-index:2;font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;padding:6px 10px;border-radius:20px;background:#00141F;color:var(--amber);border:1px solid rgba(0,220,200,.35);}
+/* ===== Player photos (TalentTile / PlayerCard / PlayerProfile) ===== */
+.tile-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+.avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;margin-right:12px;border:1px solid var(--line);}
+.player-card-top{align-items:center;}
+.profile-photo{width:120px;height:120px;border-radius:16px;object-fit:cover;flex-shrink:0;border:1px solid var(--line);}
+@media(max-width:600px){.profile-photo{width:88px;height:88px;}}
