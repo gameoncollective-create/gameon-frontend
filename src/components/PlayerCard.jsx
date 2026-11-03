@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { posShort, posClass } from '../api.js';
+import { posShort, posClass, API_BASE } from '../api.js';
 import { useGameOnData } from '../DataContext.jsx';
 
 export default function PlayerCard({ player }) {
@@ -9,6 +9,9 @@ export default function PlayerCard({ player }) {
   return (
     <Link to={`/data/player/${player.id}`} className="card">
       <div className="player-card-top">
+        {player.photo ? (
+          <img className="avatar" src={`${API_BASE}${player.photo}`} alt={player.name} loading="lazy" />
+        ) : null}
         <div className="info">
           <h4>{player.name}</h4>
           <p>{team ? team.name : (player.league || 'Unattached')}</p>
