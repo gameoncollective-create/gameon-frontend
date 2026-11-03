@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { posShort, tileClass } from '../api.js';
+import { posShort, tileClass, API_BASE } from '../api.js';
 import { useGameOnData } from '../DataContext.jsx';
 
 export default function TalentTile({ player, index, big = false, showcase = false }) {
@@ -8,6 +8,9 @@ export default function TalentTile({ player, index, big = false, showcase = fals
   const cls = tileClass(index);
   return (
     <Link to={`/data/player/${player.id}`} className={`tile ${cls} ${big ? 'big' : ''}`}>
+      {player.photo ? (
+        <img className="tile-photo" src={`${API_BASE}${player.photo}`} alt={player.name} loading="lazy" />
+      ) : null}
       <span className="chip">{posShort(player.position)}</span>
       <div className="tname">{player.name}</div>
       <div className="tmeta">{team ? team.name : (player.league || 'Unattached')}</div>
