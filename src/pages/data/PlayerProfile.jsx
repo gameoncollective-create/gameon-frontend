@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useGameOnData } from '../../DataContext.jsx';
-import { api } from '../../api.js';
+import { api, API_BASE } from '../../api.js';
 
 export default function PlayerProfile() {
   const { id } = useParams();
@@ -60,6 +60,9 @@ export default function PlayerProfile() {
             {player.position || ''}
           </div>
         </div>
+        {player.photo ? (
+          <img className="profile-photo" src={`${API_BASE}${player.photo}`} alt={player.name} loading="lazy" />
+        ) : null}
       </div>
 
       {/* ---------- PLAYER STATS ---------- */}
