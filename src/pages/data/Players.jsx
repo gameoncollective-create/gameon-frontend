@@ -3,6 +3,12 @@ import { trackEvent } from '../../analytics.js';
 import { useGameOnData } from '../../DataContext.jsx';
 import PlayerCard from '../../components/PlayerCard.jsx';
 
+const LEAGUES = [
+  { key: 'all', label: 'All leagues' },
+  { key: 'premier', label: 'Premier League' },
+  { key: 'nsl', label: 'NSL' }
+];
+
 const POSITIONS = [
   { key: 'all', label: 'All positions' },
   { key: 'goalkeeper', label: 'Goalkeepers' },
@@ -13,6 +19,7 @@ const POSITIONS = [
 
 export default function Players() {
   const { store } = useGameOnData();
+  const [activeLeague, setActiveLeague] = useState('premier');
   const [activePos, setActivePos] = useState('all');
   const [q, setQ] = useState('');
 
@@ -25,13 +32,21 @@ export default function Players() {
   }, [q]);
 
   const filtered = store.players.filter(p => {
+    const leagueOk = activeLeague === 'all' || (p.league || '').toLowerCase() === activeLeague;
     const posOk = activePos === 'all' || (p.position || '').toLowerCase().includes(activePos);
     const qOk = !q.trim() || p.name.toLowerCase().includes(q.trim().toLowerCase());
-    return posOk && qOk;
+    return leagueOk && posOk && qOk;
   });
 
   return (
     <>
+      <div className="tabs">
+        {LEAGUES.map(lg => (
+          <button key={lg.key} className={activeLeague === lg.key ? 'active' : ''} onClick={() => setActiveLeague(lg.key)}>
+            {lg.label}
+          </button>
+        ))}
+      </div>
       <div className="tabs">
         {POSITIONS.map(pos => (
           <button key={pos.key} className={activePos === pos.key ? 'active' : ''} onClick={() => setActivePos(pos.key)}>
