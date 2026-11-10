@@ -158,24 +158,26 @@ export const GPS_SESSION_STATS = {
   },
 
   // Marline Atieno was not tracked in this match.
-  // Coach report flagged "weekly" top speed and weekly accel/decel
-  // event counts as not necessarily match-only, and Iddah's minutes
-  // as an unconfirmed estimate (~50-60 min) — all left null here
-  // rather than entered as verified match figures.
   '2026-11-07': {
     'veronicah-nyambura': {
       ...empty(),
       distance_km: 8.63,
+      max_speed_kmh: 29.51,
       peak_accel_ms2: 4.8,
       sprints: 46,
+      accelerations: 143,
+      decelerations: 156,
       workload: 215.03,
       duration_min: 90,
     },
     'iddah-adhiambo': {
       ...empty(),
       distance_km: 4.64,
+      max_speed_kmh: 28.9,
       peak_accel_ms2: 5.4,
       sprints: 30,
+      accelerations: 40,
+      decelerations: 50,
       workload: 120.65,
       duration_min: 60,
     },
