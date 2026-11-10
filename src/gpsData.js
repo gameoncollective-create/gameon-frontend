@@ -31,6 +31,12 @@ export const GPS_SESSIONS = [
     detail: 'Police Bullets 4–0 Mathare United Women FC · 2 athletes tracked',
     status: 'completed',
   },
+  {
+    title: 'Session 04 — Zetech Sparks vs Mathare United Women',
+    date: '2026-11-07',
+    detail: 'Zetech Sparks vs Mathare United Women FC · 2 athletes tracked',
+    status: 'completed',
+  },
 ];
 
 export const GPS_METRICS = [
@@ -148,6 +154,30 @@ export const GPS_SESSION_STATS = {
       decelerations: 93,
       workload: 172.73,
       duration_min: 90,
+    },
+  },
+
+  // Marline Atieno was not tracked in this match.
+  // Coach report flagged "weekly" top speed and weekly accel/decel
+  // event counts as not necessarily match-only, and Iddah's minutes
+  // as an unconfirmed estimate (~50-60 min) — all left null here
+  // rather than entered as verified match figures.
+  '2026-11-07': {
+    'veronicah-nyambura': {
+      ...empty(),
+      distance_km: 8.63,
+      peak_accel_ms2: 4.8,
+      sprints: 46,
+      workload: 215.03,
+      duration_min: 90,
+    },
+    'iddah-adhiambo': {
+      ...empty(),
+      distance_km: 4.64,
+      peak_accel_ms2: 5.4,
+      sprints: 30,
+      workload: 120.65,
+      duration_min: 60,
     },
   },
 };
