@@ -34,7 +34,7 @@ export default function CookieConsent() {
   return (
     <div className="cookie-banner">
       <p>
-        We use cookies to understand site traffic (Google Analytics). See our{' '}
+        We use cookies to understand how people use the site (Google Analytics and PostHog). See our{' '}
         <Link to="/privacy">Privacy Policy</Link>.
       </p>
       <div className="cookie-banner-actions">

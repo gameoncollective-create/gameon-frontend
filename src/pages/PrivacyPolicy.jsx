@@ -12,17 +12,17 @@ export default function PrivacyPolicy() {
           <h2 style={{ color: 'var(--text)', marginTop: 36, marginBottom: 12 }}>What we collect</h2>
           <p><b>If you create an account:</b> your email address and a securely hashed password. We never store your password in readable form.</p>
           <p><b>If you use our contact form:</b> your name, email address, the role you selected, and your message, which is delivered to us by our form provider so we can reply.</p>
-          <p><b>If you browse the site:</b> basic usage data through Google Analytics — pages viewed, general location (country/city level), device type, and how you arrived at the site. Google Analytics uses cookies to do this; see "Cookies" below.</p>
+          <p><b>If you browse the site:</b> basic usage data through Google Analytics and PostHog — pages viewed, what you click, general location (country/city level), device type, and how you arrived at the site. PostHog may also record anonymous replays of how pages are used; anything you type into forms is hidden and never recorded. Both tools use cookies to do this, and only after you accept them; see "Cookies" below.</p>
           <p><b>If you're an athlete in our performance program:</b> GPS and performance data (distance, speed, sprints, workload) collected directly through signed athlete agreements, not through the public website.</p>
 
           <h2 style={{ color: 'var(--text)', marginTop: 36, marginBottom: 12 }}>Why we collect it</h2>
           <p>To run your account and the features you sign up for; to respond when you contact us; to understand how people use the site so we can improve it; and, for athletes in our program, to provide performance tracking and build their player profiles, under the terms of their individual agreements with us.</p>
 
           <h2 style={{ color: 'var(--text)', marginTop: 36, marginBottom: 12 }}>Where it's stored</h2>
-          <p>Account data is stored with Supabase (hosted in Ireland, within the EU). Contact form submissions pass through our form provider's infrastructure. Analytics data is processed by Google. We don't sell your data to anyone, and we don't share it with third parties beyond the service providers named here who help us run the site.</p>
+          <p>Account data is stored with Supabase (hosted in Ireland, within the EU). Contact form submissions pass through our form provider's infrastructure. Analytics data is processed by Google and by PostHog (hosted in the EU). We don't sell your data to anyone, and we don't share it with third parties beyond the service providers named here who help us run the site.</p>
 
           <h2 style={{ color: 'var(--text)', marginTop: 36, marginBottom: 12 }}>Cookies</h2>
-          <p>We use Google Analytics cookies to understand site traffic. You can decline these using the cookie banner when you first visit, or block them anytime through your browser settings. Declining doesn't affect your ability to use the site.</p>
+          <p>We use Google Analytics and PostHog cookies to understand how people use the site. They only load if you click Accept. You can decline these using the cookie banner when you first visit, or block them anytime through your browser settings. Declining doesn't affect your ability to use the site.</p>
 
           <h2 style={{ color: 'var(--text)', marginTop: 36, marginBottom: 12 }}>Your rights</h2>
           <p>Under Kenya's Data Protection Act, 2019, you can ask us to show you what data we hold about you, correct it, or delete it. Email <a href="mailto:nginda@gameoncollective.com">nginda@gameoncollective.com</a> and we'll respond as quickly as we can. You can also lodge a complaint with Kenya's Office of the Data Protection Commissioner (ODPC) if you believe your data has been mishandled.</p>
